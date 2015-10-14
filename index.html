@@ -152,8 +152,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/13/new-article/" itemprop="url">
-                new article
+              <a class="post-title-link" href="/2015/10/14/JSONP原理及实现跨域的方式/" itemprop="url">
+                JSONP原理及实现跨域的方式
               </a>
             
           
@@ -163,8 +163,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-13T23:29:17+08:00" content="2015-10-13">
-            2015-10-13
+          <time itemprop="dateCreated" datetime="2015-10-14T16:48:19+08:00" content="2015-10-14">
+            2015-10-14
           </time>
         </span>
 
@@ -183,7 +183,105 @@
 
       
         
-          <span itemprop="articleBody"></span>
+          <span itemprop="articleBody"><p>今天做页面时，后台给了个接口：<a href="https://a.a.com/a/a.json" target="_blank" rel="external">https://a.a.com/a/a.json</a>, 我页面的上线地址是：<a href="http://b.b.com。" target="_blank" rel="external">http://b.b.com。</a><br>显而易见，因为浏览器同源策略的限制，通过ajax无法无法取得json的数据。 </p>
+<blockquote>
+<p>   <a href="http://baike.baidu.com/link?url=-cpEuZeNumlzmO2eRL6JvKGq_7qrIho9cVWuhnJLm97tPHT4wMcVIj-2eVgvMCzxEmXktgvqhB9UlZah7x1xAa" target="_blank" rel="external">百度百科</a></p>
+<pre><code>同源策略，它是由Netscape提出的一个著名的安全策略。现在所有支JavaScript的浏览器都会使用这个策略。
+
+所谓同源是指、域名、协议和端口都相同。当一个浏览器的两个<span class="constant">tab</span>页中分别打开来 百度和谷歌的页面当浏览器的百度<span class="constant">tab</span>页执行一个脚本的时候会检查这脚本是属于哪个页面的，即检查是否同源，只有和百度同源的脚本才会被执行。
+</code></pre></blockquote>
+<p>同源策略限制了我们无法通过原生的XMLHttpRequest()对象获取到json数据。为了突破这个限制，我们的前辈们想出了一个解决方案：jsonp。</p>
+<p>jsonp并非新的数据格式，而是解决JSON跨域获取的解决方案。通过JSONP获取到得数据已经不是JSON了，而是JS类型的数据（大部分是对象）。</p>
+<p>上网找过很多讲jsonp的文章，大部分都是讲的模模糊糊的。jsonp的原理其实不复杂：</p>
+<ol>
+<li>浏览器的同源策略把跨域请求都禁止了；</li>
+<li>HTML的<code>&lt;script&gt;</code>标签是例外，可以突破同源策略从其他来源获取数据；</li>
+<li>由上可得，我们可以通过<code>&lt;script&gt;</code>标签引入jsonp文件，然后通过一系列JS操作获取数据。</li>
+</ol>
+<p>上面三点便是JSONP实现跨域的原理。</p>
+<p>原理我们知道了，该怎么实现这些操作呢？</p>
+<p>接下来轮到jQuery登场！JQ已经帮我们封装好了</p>
+<p>demo:</p>
+<pre><code>$.ajax({
+    dataType:<span class="string">'jsonp'</span>,
+    jsonp:<span class="string">'jsonp_callback'</span>,
+    url:<span class="string">'http://www.baidu.com/xxx.jsonp'</span>,
+    success:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="comment">//dosomthing</span>
+    }
+});
+</code></pre><p>原生JS demo：</p>
+<pre><code><span class="function"><span class="keyword">function</span>(<span class="params"> url </span>) <span class="title">jsonHandle</span></span>{
+    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);
+    script.setAttribute(<span class="string">"src"</span>,url);
+    <span class="built_in">document</span>.getElementsByTagName(<span class="string">"body"</span>)[<span class="number">0</span>].appendChild(script);
+}
+<span class="comment">//JS插入之后就可以处理数据了</span>
+</code></pre><p>原生封装实现：</p>
+<pre><code>;(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+<span class="keyword">var</span> formatParams = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{<span class="comment">//格式化参数</span>
+    <span class="keyword">var</span> arr = [];
+    <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) {
+        arr.push(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">'='</span> + <span class="built_in">encodeURIComponent</span>(data[name]));
+    }
+    <span class="keyword">return</span> arr.join(<span class="string">'&amp;'</span>);
+}
+<span class="keyword">var</span> jsonp = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>{
+    options = options || {};
+    <span class="keyword">if</span> (!options.url || !options.callback) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"参数不合法"</span>);
+    }
+
+    <span class="comment">//创建 script 标签并加入到页面中</span>
+    <span class="keyword">var</span> callbackName = (<span class="string">'jsonp_'</span> + <span class="built_in">Math</span>.random()).replace(<span class="string">"."</span>, <span class="string">""</span>);
+    <span class="keyword">var</span> oHead = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>];
+    <span class="keyword">var</span> params = <span class="string">""</span>;
+    <span class="keyword">if</span>(options.data){
+        options.data[options.callback] = callbackName;
+        params += formatParams(options.data);
+    }<span class="keyword">else</span>{
+        params+=options.callback+<span class="string">"="</span>+callbackName;
+    }
+    <span class="keyword">var</span> oS = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);
+    oHead.appendChild(oS);
+
+    <span class="comment">//创建jsonp回调函数</span>
+    <span class="built_in">window</span>[callbackName] = <span class="function"><span class="keyword">function</span> (<span class="params">json</span>) </span>{
+        oHead.removeChild(oS);
+        clearTimeout(oS.timer);
+        <span class="built_in">window</span>[callbackName] = <span class="literal">null</span>;
+        options.success &amp;&amp; options.success(json);
+    };
+
+    <span class="comment">//发送请求</span>
+    oS.src = options.url + <span class="string">'?'</span> + params;
+
+    <span class="comment">//超时处理</span>
+    <span class="keyword">if</span> (options.time) {
+        oS.timer = setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
+            <span class="built_in">window</span>[callbackName] = <span class="literal">null</span>;
+            oHead.removeChild(oS);
+            options.fail &amp;&amp; options.fail({ message: <span class="string">"超时"</span> });
+        }, options.time);
+    }
+};
+<span class="built_in">window</span>.jsonp = jsonp;
+})();
+
+<span class="comment">//调用方法</span>
+jsonp({
+    url:<span class="string">"http://localhost:8000/name"</span>,
+    callback:<span class="string">"callback"</span>,   <span class="comment">//跟后台协商的接收回调名</span>
+    data:{id:<span class="string">"1000120"</span>},
+    success:<span class="function"><span class="keyword">function</span>(<span class="params">json</span>)</span>{
+        alert(<span class="string">"jsonp_ok"</span>);
+    },
+    fail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        alert(<span class="string">"fail"</span>);
+    },
+    time:<span class="number">10000</span>
+})
+</code></pre></span>
         
       
     </div>
@@ -224,7 +322,7 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-13T11:40:57+08:00" content="2015-10-13">
+          <time itemprop="dateCreated" datetime="2015-10-13T23:58:48+08:00" content="2015-10-13">
             2015-10-13
           </time>
         </span>
@@ -254,6 +352,67 @@
 <h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/13/new-article/" itemprop="url">
+                new article
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-13T23:29:17+08:00" content="2015-10-13">
+            2015-10-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"></span>
         
       
     </div>
@@ -307,7 +466,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -321,7 +480,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
