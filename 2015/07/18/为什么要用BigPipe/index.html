@@ -77,7 +77,7 @@
 #####BigPipe思路，分块加载，一次请求，多次返回
 
 浏览器发送一次请求">
-<meta property="og:updated_time" content="2015-10-15T09:00:40.000Z">
+<meta property="og:updated_time" content="2015-10-15T09:34:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么要用BigPipe">
 <meta name="twitter:description" content="BigPipe目标：前后端分离，提高页面渲染速度
@@ -290,9 +290,9 @@
 </ol>
 <p><strong>BigPipe堵塞模型（类似于CPU分级流水）</strong></p>
 <pre><code>pagelet1      <span class="string">|    服务器端计算        网络传输        浏览器渲染</span>
-                <span class="string">|</span>
+              <span class="string">|</span>
 pagelet2      <span class="string">|        服务器端计算        网络传输        浏览器渲染</span>
-                <span class="string">|</span>
+              <span class="string">|</span>
 pagelet3      <span class="string">|            服务器端计算        网络传输        浏览器渲染</span>
 
 分级传输极大提高了首页渲染效率
