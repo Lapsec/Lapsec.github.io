@@ -53,7 +53,7 @@
 同源策略，它是由Netscape提出的一个著名的安全策略。现在所有支JavaScript的浏览器都会使用这个策略。
 
 所谓同源是指、域名、协议和端口都相同。当一个浏览器的">
-<meta property="og:updated_time" content="2015-11-04T06:16:20.000Z">
+<meta property="og:updated_time" content="2015-11-04T06:27:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSONP原理及实现跨域的方式">
 <meta name="twitter:description" content="今天做页面时，后台给了个接口：https://a.a.com/a/a.json, 我页面的上线地址是：http://b.b.com。显而易见，因为浏览器同源策略的限制，通过ajax无法无法取得json的数据。 
@@ -265,7 +265,7 @@
 }
 <span class="comment">//JS插入之后就可以处理数据了</span>
 </code></pre><p>原生封装实现：</p>
-<pre><code>;(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+<pre><code>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
 <span class="keyword">var</span> formatParams = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{<span class="comment">//格式化参数</span>
     <span class="keyword">var</span> arr = [];
     <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) {
@@ -439,7 +439,7 @@ jsonp({
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -453,7 +453,7 @@ jsonp({
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

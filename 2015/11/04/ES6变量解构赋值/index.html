@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="BigPipe," />
+  <meta name="keywords" content="ES6," />
 
 
 
@@ -37,61 +37,37 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="BigPipe目标：前后端分离，提高页面渲染速度
-######BigPipe解决的问题：
+<meta name="description" content="ES6的变量结构赋值，看起来能给日常编程带来不少方便，果断把豆豆捡回来存着先。
+####一、数组的解构赋值
+var [a, b, c] = [1, 2, 3];
+本质为“模式匹配”，只要等号两边模式相同，左边变量会被赋予对应的值。
+let[, , third] = [&apos;foo&apos;, &apos;bar&apos;, &apos;baz&apos;];
+third // &quot;baz&quot;
 
-下载堵塞
-服务端下载浪费
-
-一般的网页加载是直接通过访问服务器，发送请求，收到返回数据，然后渲染。
-######一般堵塞模型：
-后端渲染页面
-    ↓
-网络延迟
-    ↓
-浏览器端页面渲染
-    ↓
-所有的数据一次性渲染
-#####BigPipe思路，分块加载，一次请求，多次返回">
+let[head, ...tail] = [1, 2,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为什么要用BigPipe">
-<meta property="og:url" content="http://yoursite.com/2015/09/12/为什么要用BigPipe/index.html">
+<meta property="og:title" content="ES6变量解构赋值">
+<meta property="og:url" content="http://yoursite.com/2015/11/04/ES6变量解构赋值/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="BigPipe目标：前后端分离，提高页面渲染速度
-######BigPipe解决的问题：
+<meta property="og:description" content="ES6的变量结构赋值，看起来能给日常编程带来不少方便，果断把豆豆捡回来存着先。
+####一、数组的解构赋值
+var [a, b, c] = [1, 2, 3];
+本质为“模式匹配”，只要等号两边模式相同，左边变量会被赋予对应的值。
+let[, , third] = [&apos;foo&apos;, &apos;bar&apos;, &apos;baz&apos;];
+third // &quot;baz&quot;
 
-下载堵塞
-服务端下载浪费
-
-一般的网页加载是直接通过访问服务器，发送请求，收到返回数据，然后渲染。
-######一般堵塞模型：
-后端渲染页面
-    ↓
-网络延迟
-    ↓
-浏览器端页面渲染
-    ↓
-所有的数据一次性渲染
-#####BigPipe思路，分块加载，一次请求，多次返回">
-<meta property="og:updated_time" content="2015-11-04T06:26:21.000Z">
+let[head, ...tail] = [1, 2,">
+<meta property="og:updated_time" content="2015-11-04T06:40:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="为什么要用BigPipe">
-<meta name="twitter:description" content="BigPipe目标：前后端分离，提高页面渲染速度
-######BigPipe解决的问题：
+<meta name="twitter:title" content="ES6变量解构赋值">
+<meta name="twitter:description" content="ES6的变量结构赋值，看起来能给日常编程带来不少方便，果断把豆豆捡回来存着先。
+####一、数组的解构赋值
+var [a, b, c] = [1, 2, 3];
+本质为“模式匹配”，只要等号两边模式相同，左边变量会被赋予对应的值。
+let[, , third] = [&apos;foo&apos;, &apos;bar&apos;, &apos;baz&apos;];
+third // &quot;baz&quot;
 
-下载堵塞
-服务端下载浪费
-
-一般的网页加载是直接通过访问服务器，发送请求，收到返回数据，然后渲染。
-######一般堵塞模型：
-后端渲染页面
-    ↓
-网络延迟
-    ↓
-浏览器端页面渲染
-    ↓
-所有的数据一次性渲染
-#####BigPipe思路，分块加载，一次请求，多次返回">
+let[head, ...tail] = [1, 2,">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -101,7 +77,7 @@
   };
 </script>
 
-    <title> 为什么要用BigPipe // Lapsec </title>
+    <title> ES6变量解构赋值 // Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -224,7 +200,7 @@
           
           
             
-              为什么要用BigPipe
+              ES6变量解构赋值
             
           
         </h1>
@@ -233,8 +209,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-12T18:17:44+08:00" content="2015-09-12">
-            2015-09-12
+          <time itemprop="dateCreated" datetime="2015-11-04T14:29:25+08:00" content="2015-11-04">
+            2015-11-04
           </time>
         </span>
 
@@ -244,8 +220,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/12/为什么要用BigPipe/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/12/为什么要用BigPipe/" itemprop="commentsCount"></span>
+              <a href="/2015/11/04/ES6变量解构赋值/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/ES6变量解构赋值/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -259,53 +235,131 @@
       
 
       
-        <span itemprop="articleBody"><p>BigPipe目标：前后端分离，提高页面渲染速度</p>
-<p>######BigPipe解决的问题：</p>
-<ol>
-<li>下载堵塞</li>
-<li>服务端下载浪费</li>
-</ol>
-<p>一般的网页加载是直接通过访问服务器，发送请求，收到返回数据，然后渲染。</p>
-<p>######一般堵塞模型：</p>
-<pre><code>后端渲染页面
-    ↓
-网络延迟
-    ↓
-浏览器端页面渲染
-    ↓
-所有的数据一次性渲染
-</code></pre><p>#####BigPipe思路，分块加载，一次请求，多次返回</p>
-<a id="more"></a>
-<ol>
-<li>浏览器发送一次请求；</li>
-<li>服务端收到请求后，开始处理请求；</li>
-<li>服务器端按预先写好的控制流程，开始分块渲染HTML；</li>
-<li>如果渲染完了向浏览器端发送数据；</li>
-<li>浏览器端收到分块数据后开始渲染</li>
-</ol>
-<p><strong>BigPipe堵塞模型（类似于CPU分级流水）</strong></p>
-<pre><code>pagelet1      <span class="string">|    服务器端计算        网络传输        浏览器渲染</span>
-              <span class="string">|</span>
-pagelet2      <span class="string">|        服务器端计算        网络传输        浏览器渲染</span>
-              <span class="string">|</span>
-pagelet3      <span class="string">|            服务器端计算        网络传输        浏览器渲染</span>
+        <span itemprop="articleBody"><pre><code>ES6的变量结构赋值，看起来能给日常编程带来不少方便，果断把豆豆捡回来存着先。
+</code></pre><p>####一、数组的解构赋值</p>
+<pre><code><span class="atom">var</span> [<span class="atom">a</span>, <span class="atom">b</span>, <span class="atom">c</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];
+本质为“模式匹配”，只要等号两边模式相同，左边变量会被赋予对应的值。
+<span class="atom">let</span>[, , <span class="atom">third</span>] = [<span class="string">'foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz'</span>];
+<span class="atom">third</span> // <span class="string">"baz"</span>
 
-分级传输极大提高了首页渲染效率
-——————————————————————————————————————————————————————————————————————————
-</code></pre><p>#####BigPipe VS Ajax</p>
-<p>BigPipe: </p>
-<ol>
-<li>发送一个请求后多次返回数据</li>
-<li>浏览器和服务器工作并行执行</li>
-<li>只有一个请求，对服务器压力少</li>
-</ol>
-<p>AJAX：</p>
-<ol>
-<li>发送一个请求后只返回一次数据</li>
-<li>浏览器和服务器工作顺序执行</li>
-<li>有多个请求，对服务器压力大</li>
-</ol>
-</span>
+<span class="atom">let</span>[<span class="atom">head</span>, ...<span class="atom">tail</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];
+<span class="atom">head</span> //<span class="number">1</span>
+<span class="atom">tail</span> //[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]
+
+不完全解构：
+<span class="atom">let</span>[<span class="atom">x</span>,<span class="atom">y</span>] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];
+<span class="atom">x</span> //<span class="number">1</span>
+<span class="atom">y</span> //<span class="number">2</span>
+
+<span class="atom">let</span>[<span class="atom">a</span>, [<span class="atom">b</span>], <span class="atom">d</span>] = [<span class="number">1</span>, [<span class="number">2</span>,<span class="number">3</span>], <span class="number">4</span>];
+<span class="atom">a</span> //<span class="number">1</span>
+<span class="atom">b</span> //<span class="number">2</span>
+<span class="atom">d</span> //<span class="number">4</span>
+</code></pre><p> 如果等号右边不是数组。（严格说，不是可遍历的解构）,则报错</p>
+<pre><code>  <span class="keyword">let</span> [foo] = <span class="number">1</span>;
+<span class="keyword">let</span> [foo] = <span class="literal">false</span>;
+ <span class="keyword">let</span> [foo] = <span class="literal">NaN</span>;
+ <span class="keyword">let</span> [foo] = <span class="literal">undefined</span>;
+ <span class="keyword">let</span> [foo] = <span class="literal">null</span>;
+ 都会报错
+</code></pre><p> 解构赋值允许指定默认值( 默认值生效的条件是，对象的属性值严格等于undefined。)</p>
+<pre><code> [<span class="atom">x</span>, <span class="atom">y</span>=<span class="string">'b'</span>] = [<span class="string">'a'</span>] //<span class="atom">x</span>=<span class="string">'a'</span>, <span class="atom">y</span>=<span class="string">'b'</span>
+
+[<span class="atom">x</span>, <span class="atom">y</span>=<span class="string">'b'</span>] = [<span class="string">'a'</span>, <span class="atom">undefined</span>] //<span class="atom">x</span>=<span class="string">'a'</span>, <span class="atom">y</span>=<span class="string">'b'</span>
+</code></pre><h4 id="二、对象的解构赋值">二、对象的解构赋值</h4><pre><code><span class="label">var</span> {foo, <span class="keyword">bar} </span>= {foo: <span class="string">"aaa"</span>, <span class="keyword">bar: </span><span class="string">"bbb"</span>}<span class="comment">;</span>
+<span class="label">foo</span> // <span class="string">"aaa"</span>
+<span class="keyword">bar </span>// <span class="string">"bbb"</span>
+</code></pre><p>对象解构跟数组解构不同。数据结构按位置取值，对象解构按属性名取值；</p>
+<pre><code><span class="label">var</span> {<span class="keyword">bar, </span>foo} = {foo: <span class="string">"aaa"</span>, <span class="keyword">bar: </span><span class="string">"bbb"</span>}<span class="comment">;</span>
+<span class="label">foo</span> // <span class="string">"aaa"</span>
+<span class="keyword">bar </span>// <span class="string">"bbb"</span>
+
+<span class="label">var</span> {taz} = {foo: <span class="string">"aaa"</span>, <span class="keyword">bar: </span><span class="string">"bbb"</span>}<span class="comment">;</span>
+<span class="keyword">baz </span>//undefined
+</code></pre><p>如果变量名与属性名不一致，必须写成这样</p>
+<pre><code><span class="label">var</span> { foo: <span class="keyword">baz </span>} = { foo: <span class="string">"aaa"</span>, <span class="keyword">bar: </span><span class="string">"bbb"</span> }<span class="comment">;</span>
+<span class="keyword">baz </span>// <span class="string">"aaa"</span>
+</code></pre><p>解构也可以用于嵌套解构对象</p>
+<pre><code><span class="variable"><span class="keyword">var</span> obj</span> = {
+ p: [
+     <span class="string">"Hello"</span>,
+      {y: <span class="string">"World"</span>} 
+ ]
+};
+<span class="variable"><span class="keyword">var</span> { p</span>: [x,{y}] } = obj;
+x <span class="comment">// "Hello"</span>
+y <span class="comment">// "World"</span>
+</code></pre><p>如果解构失败，变量值等于undefined</p>
+<p>####三、字符串解构赋值</p>
+<pre><code><span class="keyword">const</span>[a, b] = <span class="string">'hi'</span>;
+a <span class="comment">//"h"</span>
+b <span class="comment">//"i"</span>
+</code></pre><p>可以对数据长度属性解构赋值</p>
+<pre><code>let{length: <span class="built_in">len</span>} = <span class="string">'hello'</span>;
+<span class="built_in">len</span> <span class="comment">//5</span>
+</code></pre><p>####四、函数参数解构赋值</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">([x, y])</span></span>{
+     <span class="keyword">return</span> x + y;
+}
+add([<span class="number">1</span>,<span class="number">2</span>]);
+</code></pre><p>函数add参数不是数组，而是通过解构得到变量x和y。</p>
+<p>函数参数解构可以使用默认值</p>
+<pre><code><span class="function">function <span class="title">move</span><span class="params">({x = <span class="number">0</span>, y = <span class="number">0</span>} = {})</span></span>{
+     <span class="keyword">return</span> [x,y];
+}
+move({x: <span class="number">3</span>, y: <span class="number">8</span>}); <span class="comment">//[3, 8]</span>
+move({x: <span class="number">3</span>}); <span class="comment">//[3, 0]</span>
+</code></pre><p>####五、圆括号问题</p>
+<p>解构解析对编译器来说并不容易，尽量少用圆括号。</p>
+<p>####六、用途</p>
+<p>1、交换变量值</p>
+<pre><code><span class="string">[x, y]</span> = <span class="string">[y, x]</span>;
+</code></pre><p> 2、从函数返回多个之=值</p>
+<pre><code> (<span class="number">1</span>)返回一个数组
+ <span class="function">function <span class="title">example</span><span class="params">()</span></span>{
+     <span class="keyword">return</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] ;
+ }
+ var [a,b,c] = example();
+
+(<span class="number">2</span>)返回一个对象
+ <span class="function">function <span class="title">example</span><span class="params">()</span></span>{
+      <span class="keyword">return</span> {
+          foo: <span class="number">1</span>,
+          bar: <span class="number">2</span> 
+      }
+ }
+ var {foo , bar } = example;
+</code></pre><p>3、函数参数定义，上面有</p>
+<p>4、提取json数据    </p>
+<pre><code>var jsonData = {
+     id: <span class="number">42</span>,
+     <span class="keyword">status</span>: <span class="string">'ok'</span>,
+     <span class="type">data</span>: [<span class="number">867</span>,<span class="number">5309</span>]
+}
+
+let { id, <span class="keyword">status</span>, <span class="type">data</span>: <span class="keyword">number</span> } = jsonData;
+
+console.<span class="built_in">log</span>(id, <span class="keyword">status</span>, <span class="keyword">number</span>)
+//<span class="number">42</span>, ok, [<span class="number">867</span>, <span class="number">5309</span>]  
+</code></pre><p>5、函数参数默认值，具体见上面</p>
+<p>6、遍历Map解构</p>
+<pre><code>var <span class="built_in">map</span> = <span class="keyword">new</span> Map();
+<span class="built_in">map</span>.<span class="built_in">set</span>(<span class="string">'first'</span>: <span class="string">'hello'</span>);
+<span class="built_in">map</span>.<span class="built_in">set</span>(<span class="string">'second'</span>: <span class="string">'world'</span>);
+
+<span class="keyword">for</span>( let [<span class="variable">key</span>, value] of <span class="built_in">map</span> ){
+ console.<span class="built_in">log</span>(<span class="variable">key</span> + <span class="string">'id'</span> + value);
+}
+<span class="comment">// first is hello</span>
+<span class="comment">// second is world</span>
+</code></pre><p>如果只获取键名或者只获取键值</p>
+<pre><code><span class="comment">//获取键名</span>
+<span class="keyword">for</span>(<span class="keyword">let</span> [key] <span class="keyword">of</span> map){
+     <span class="comment">// ...</span>
+}
+</code></pre><p>7、输入模块的指定方法</p>
+<pre><code><span class="keyword">const</span> { SourceMapConsumer, SourceNode } = <span class="built_in">require</span>(<span class="string">"source-map"</span>);
+</code></pre></span>
       
     </div>
 
@@ -313,7 +367,7 @@ pagelet3      <span class="string">|            服务器端计算        网络
       
         <div class="post-tags">
           
-            <a href="/tags/BigPipe/" rel="tag">#BigPipe</a>
+            <a href="/tags/ES6/" rel="tag">#ES6</a>
           
         </div>
       
@@ -322,13 +376,11 @@ pagelet3      <span class="string">|            服务器端计算        网络
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/04/基于FIS的前端工程化尝试/" rel="prev">基于FIS的前端工程化尝试</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/27/JSONP原理及实现跨域的方式/" rel="next">JSONP原理及实现跨域的方式</a>
+              <a href="/2015/11/04/基于FIS的前端工程化尝试/" rel="next">基于FIS的前端工程化尝试</a>
             
           </div>
         </div>
@@ -377,8 +429,8 @@ pagelet3      <span class="string">|            服务器端计算        网络
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/09/12/为什么要用BigPipe/"
-                       data-title="为什么要用BigPipe" data-url="http://yoursite.com/2015/09/12/为什么要用BigPipe/">
+                  <div class="ds-thread" data-thread-key="2015/11/04/ES6变量解构赋值/"
+                       data-title="ES6变量解构赋值" data-url="http://yoursite.com/2015/11/04/ES6变量解构赋值/">
                   </div>
                 
               </div>
@@ -460,7 +512,7 @@ pagelet3      <span class="string">|            服务器端计算        网络
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#二、对象的解构赋值"><span class="nav-number">1.</span> <span class="nav-text">二、对象的解构赋值</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
