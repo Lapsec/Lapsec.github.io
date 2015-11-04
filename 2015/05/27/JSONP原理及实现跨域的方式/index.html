@@ -53,7 +53,7 @@
 同源策略，它是由Netscape提出的一个著名的安全策略。现在所有支JavaScript的浏览器都会使用这个策略。
 
 所谓同源是指、域名、协议和端口都相同。当一个浏览器的">
-<meta property="og:updated_time" content="2015-10-15T08:51:26.000Z">
+<meta property="og:updated_time" content="2015-11-04T06:16:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSONP原理及实现跨域的方式">
 <meta name="twitter:description" content="今天做页面时，后台给了个接口：https://a.a.com/a/a.json, 我页面的上线地址是：http://b.b.com。显而易见，因为浏览器同源策略的限制，通过ajax无法无法取得json的数据。 
@@ -236,6 +236,7 @@
 
 所谓同源是指、域名、协议和端口都相同。当一个浏览器的两个<span class="constant">tab</span>页中分别打开来 百度和谷歌的页面当浏览器的百度<span class="constant">tab</span>页执行一个脚本的时候会检查这脚本是属于哪个页面的，即检查是否同源，只有和百度同源的脚本才会被执行。
 </code></pre></blockquote>
+<a id="more"></a>
 <p>同源策略限制了我们无法通过原生的XMLHttpRequest()对象获取到json数据。为了突破这个限制，我们的前辈们想出了一个解决方案：jsonp。</p>
 <p>jsonp并非新的数据格式，而是解决JSON跨域获取的解决方案。通过JSONP获取到得数据已经不是JSON了，而是JS类型的数据（大部分是对象）。</p>
 <p>上网找过很多讲jsonp的文章，大部分都是讲的模模糊糊的。jsonp的原理其实不复杂：</p>
