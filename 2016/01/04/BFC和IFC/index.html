@@ -37,16 +37,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="BFC、IFC">
+<meta name="description" content="最近比较纠结CSS，于是乎去扒了BFC、IFC的规范">
 <meta property="og:type" content="article">
 <meta property="og:title" content="W3C规范里的BFC和IFC">
 <meta property="og:url" content="http://yoursite.com/2016/01/04/BFC和IFC/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="BFC、IFC">
-<meta property="og:updated_time" content="2016-01-04T12:38:53.000Z">
+<meta property="og:description" content="最近比较纠结CSS，于是乎去扒了BFC、IFC的规范">
+<meta property="og:updated_time" content="2016-01-04T12:47:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="W3C规范里的BFC和IFC">
-<meta name="twitter:description" content="BFC、IFC">
+<meta name="twitter:description" content="最近比较纠结CSS，于是乎去扒了BFC、IFC的规范">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -214,7 +214,7 @@
       
 
       
-        <span itemprop="articleBody"><p>BFC、IFC</p>
+        <span itemprop="articleBody"><p>最近比较纠结CSS，于是乎去扒了BFC、IFC的规范</p>
 <a id="more"></a>
 <p>####一、盒子模型</p>
 <p>页面任何一个元素都可以看成是box，box分block-level，inline-level和匿名的。</p>
@@ -227,19 +227,12 @@
 </code></pre><p>####二、BFC<br>什么是BFC？</p>
 <p>BFC的全称是Block Formatting Context，直译过来是：块级格式化上下文。</p>
 <p>在理解BFC时先理解三个概念：</p>
-<pre><code><span class="number">1</span>、<span class="keyword">Block</span>-level elements
-    属于diplay: <span class="keyword">block</span>;的元素，都是<span class="keyword">Block</span>-level elements(块级元素);有可能会触发BFC。
-
-<span class="number">2</span>、<span class="keyword">block</span> boxes
-    W3C规范原文的定义：<span class="string">"Block-level boxes that are also block containers are called block boxes."</span>可以作为<span class="keyword">block</span> containers的块级元素，称为<span class="keyword">block</span> boxes
-
-<span class="number">3</span>、<span class="keyword">block</span> container box
-    原文：<span class="string">"a block-level box is also a block container box"</span>。
-
-最后还有一句：<span class="string">"The three terms "</span><span class="keyword">block</span>-level box,<span class="string">" "</span><span class="keyword">block</span> container box,<span class="string">" and "</span><span class="keyword">block</span> box<span class="string">" are sometimes abbreviated as "</span><span class="keyword">block</span><span class="string">" where unambiguous."</span>
-
-都简称为块级元素好了orz...为什么要纠结这个？主要是被规范的用词搞晕了，花了点时间才搞明白这三个词的意思。
-</code></pre><p>BFC的布局规矩：</p>
+<p>1、Block-level elements<br>属于diplay: block;的元素，都是Block-level elements(块级元素);有可能会触发BFC。</p>
+<p>2、block boxes<br>W3C规范原文的定义：”Block-level boxes that are also block containers are called block boxes.”可以作为block containers的块级元素，称为block boxes</p>
+<p>3、block container box<br>原文：”a block-level box is also a block container box”。</p>
+<p>最后还有一句：”The three terms “block-level box,” “block container box,” and “block box” are sometimes abbreviated as “block” where unambiguous.”</p>
+<p>都简称为块级元素好了orz…为什么要纠结这个？主要是被规范的用词搞晕了，花了点时间才搞明白这三个词的意思。</p>
+<p>BFC的布局规矩：</p>
 <pre><code><span class="number">1</span>、内部box在垂直方向，一个接一个的放置;
 <span class="number">2</span>、box的垂直方向由margin决定，属于同一个BFC的两个box间的margin会重叠
 <span class="number">3</span>、BFC区域不会与<span class="keyword">float</span> box重叠（可用于排版）；
@@ -252,46 +245,49 @@
 4、<span class="attribute">display</span>为<span class="value">inline</span>-<span class="value">block</span>, <span class="attribute">flex</span>, 或者<span class="value">inline</span>-<span class="attribute">flex</span>；
 5、<span class="attribute">overflow</span>不为<span class="value">visible</span>；
 </code></pre><p>扒了下 <a href="http://www.w3.org/TR/CSS2/visuren.html#block-formatting" target="_blank" rel="external">W3C的文档</a>，里面对BFC的解释是酱紫的：</p>
-<pre><code><span class="comment">"9.4.1 Block formatting contexts 
-
-Floats, absolutely positioned elements, block containers (such as inline-blocks, table-cells, and table-captions) that are not block boxes, and block boxes with 'overflow' other than 'visible' (except when that value has been propagated to the viewport) establish new block formatting contexts for their contents.
-
-In a block formatting context, boxes are laid out one after the other, vertically, beginning at the top of a containing block. The vertical distance between two sibling boxes is determined by the 'margin' properties. Vertical margins between adjacent block-level boxes in a block formatting context collapse.
-
-In a block formatting context, each box's left outer edge touches the left edge of the containing block (for right-to-left formatting, right edges touch). This is true even in the presence of floats (although a box's line boxes may shrink due to the floats), unless the box establishes a new block formatting context (in which case the box itself may become narrower due to the floats).
-For information about page breaks in paged media, please consult the section on allowed page breaks."</span>
-</code></pre><p>####三、IFC</p>
+<p>“9.4.1 Block formatting contexts </p>
+<blockquote>
+</blockquote>
+<p>Floats, absolutely positioned elements, block containers (such as inline-blocks, table-cells, and table-captions) that are not block boxes, and block boxes with ‘overflow’ other than ‘visible’ (except when that value has been propagated to the viewport) establish new block formatting contexts for their contents.</p>
+<p>In a block formatting context, boxes are laid out one after the other, vertically, beginning at the top of a containing block. The vertical distance between two sibling boxes is determined by the ‘margin’ properties. Vertical margins between adjacent block-level boxes in a block formatting context collapse.</p>
+<p>In a block formatting context, each box’s left outer edge touches the left edge of the containing block (for right-to-left formatting, right edges touch). This is true even in the presence of floats (although a box’s line boxes may shrink due to the floats), unless the box establishes a new block formatting context (in which case the box itself may become narrower due to the floats).<br>For information about page breaks in paged media, please consult the section on allowed page breaks.”</p>
+<p>####三、IFC</p>
 <p>同理，IFC是Inline formatting context。</p>
 <p>在 <a href="http://www.w3.org/TR/CSS2/visuren.html#inline-formatting" target="_blank" rel="external">规范</a> 里，IFC的描述比BFC的描述多很多，原文比较长，一点点扒吧:</p>
-<pre><code>In <span class="operator">an</span> inline formatting context, boxes are laid out horizontally, <span class="constant">one</span> <span class="keyword">after</span> <span class="operator">the</span> other, beginning <span class="keyword">at</span> <span class="operator">the</span> top <span class="operator">of</span> <span class="operator">a</span> containing block. Horizontal margins, borders, <span class="operator">and</span> padding are respected between these boxes. The boxes may be aligned vertically <span class="operator">in</span> different ways: their bottoms <span class="operator">or</span> tops may be aligned, <span class="operator">or</span> <span class="operator">the</span> baselines <span class="operator">of</span> <span class="keyword">text</span> <span class="operator">within</span> them may be aligned. The rectangular area that <span class="operator">contains</span> <span class="operator">the</span> boxes that form <span class="operator">a</span> <span class="built_in">line</span> is called <span class="operator">a</span> <span class="built_in">line</span> box.
-在一个IFC中，从父级元素的顶部开始，盒子一个接一个横向排列。此时，横向的margin、borders、padding在这些盒子中都是有效的。这些盒子有可能通过不同的方式垂直对齐：<span class="number">1</span>、他们底部或者顶部可以对齐，<span class="number">2</span>、或者可以他们内部的文字基线可以对齐。如果一个矩形区域，包含着一些排成一条线的盒子，称为<span class="built_in">line</span> box。
-
-The width <span class="operator">of</span> <span class="operator">a</span> <span class="built_in">line</span> box is determined <span class="keyword">by</span> <span class="operator">a</span> containing block <span class="operator">and</span> <span class="operator">the</span> presence <span class="operator">of</span> floats. The height <span class="operator">of</span> <span class="operator">a</span> <span class="built_in">line</span> box is determined <span class="keyword">by</span> <span class="operator">the</span> rules given <span class="operator">in</span> <span class="operator">the</span> section <span class="command"><span class="keyword">on</span> <span class="title">line</span> <span class="title">height</span> <span class="title">calculations</span>.</span>
-一个<span class="built_in">line</span> box的宽度，由他的包含块(containg block)和floats的存在情况决定。linebox的高度，由你给出的代码决定。
-
-A <span class="built_in">line</span> box is always tall enough <span class="keyword">for</span> all <span class="operator">of</span> <span class="operator">the</span> boxes <span class="keyword">it</span> <span class="operator">contains</span>. However, <span class="keyword">it</span> may be taller than <span class="operator">the</span> tallest box <span class="keyword">it</span> <span class="operator">contains</span> (<span class="keyword">if</span>, <span class="keyword">for</span> example, boxes are aligned so that baselines <span class="built_in">line</span> up). When <span class="operator">the</span> height <span class="operator">of</span> <span class="operator">a</span> box B is less than <span class="operator">the</span> height <span class="operator">of</span> <span class="operator">the</span> <span class="built_in">line</span> box containing <span class="keyword">it</span>, <span class="operator">the</span> vertical alignment <span class="operator">of</span> B <span class="operator">within</span> <span class="operator">the</span> <span class="built_in">line</span> box is determined <span class="keyword">by</span> <span class="operator">the</span> <span class="string">'vertical-align'</span> property. 
-When several inline-level boxes cannot fit horizontally <span class="operator">within</span> <span class="operator">a</span> single <span class="built_in">line</span> box, they are distributed <span class="operator">among</span> <span class="constant">two</span> <span class="operator">or</span> more vertically-stacked <span class="built_in">line</span> boxes. Thus, <span class="operator">a</span> <span class="keyword">paragraph</span> is <span class="operator">a</span> vertical stack <span class="operator">of</span> <span class="built_in">line</span> boxes. Line boxes are stacked <span class="operator">with</span> no vertical separation (except <span class="keyword">as</span> specified elsewhere) <span class="operator">and</span> they never overlap.
-一般<span class="built_in">line</span> box的高度对于子元素而言总是够用的，不过有可能比他包含的最高的元素还高（如果这样，内部包含的盒子会对齐，基线排成一排）。当盒子的高度小于父级盒子高度时，垂直方向的对齐由‘vertical-align’属性决定（疑问：原文的box B是啥？？）。
-当几个内联盒子在<span class="built_in">line</span> box一行内放不下时，它们会分布在两个以上的垂直并列(vertically-stacked)的<span class="built_in">line</span> box上。因此，一个段落都是一堆<span class="built_in">line</span> box堆叠在一起。<span class="built_in">line</span> box在垂直堆叠的时候，不会有分离(no vertical separation)而且绝不会重叠（其他特殊情况除外【啥特殊情况？？】）
-
-In general, <span class="operator">the</span> left edge <span class="operator">of</span> <span class="operator">a</span> <span class="built_in">line</span> box touches <span class="operator">the</span> left edge <span class="operator">of</span> its containing block <span class="operator">and</span> <span class="operator">the</span> <span class="constant">right</span> edge touches <span class="operator">the</span> <span class="constant">right</span> edge <span class="operator">of</span> its containing block. However, floating boxes may come between <span class="operator">the</span> containing block edge <span class="operator">and</span> <span class="operator">the</span> <span class="built_in">line</span> box edge. Thus, although <span class="built_in">line</span> boxes <span class="operator">in</span> <span class="operator">the</span> same inline formatting context generally have <span class="operator">the</span> same width (that <span class="operator">of</span> <span class="operator">the</span> containing block), they may vary <span class="operator">in</span> width <span class="keyword">if</span> available horizontal <span class="constant">space</span> is reduced due <span class="built_in">to</span> floats. Line boxes <span class="operator">in</span> <span class="operator">the</span> same inline formatting context generally vary <span class="operator">in</span> height (e.g., <span class="constant">one</span> <span class="built_in">line</span> might contain <span class="operator">a</span> tall image <span class="keyword">while</span> <span class="operator">the</span> others contain only <span class="keyword">text</span>).
-一般来说，<span class="built_in">line</span> box和内部元素，都是左挨左，右挨右。不过浮动盒子可能会在包含块和<span class="built_in">line</span> box的边缘之间。因此，即使<span class="built_in">line</span> box在同一个IFC里通常有相同的宽度。如果他们横向间距会因float减少，它们宽度可能会不一样。<span class="built_in">line</span> box在同一个IFC高度可能不一样（e.x.：含有不同高度的image）
-
-When <span class="operator">the</span> total width <span class="operator">of</span> <span class="operator">the</span> inline-level boxes <span class="command"><span class="keyword">on</span> <span class="title">a</span> <span class="title">line</span> <span class="title">is</span> <span class="title">less</span> <span class="title">than</span> <span class="title">the</span> <span class="title">width</span> <span class="title">of</span> <span class="title">the</span> <span class="title">line</span> <span class="title">box</span> <span class="title">containing</span> <span class="title">them</span>, <span class="title">their</span> <span class="title">horizontal</span> <span class="title">distribution</span> <span class="title">within</span> <span class="title">the</span> <span class="title">line</span> <span class="title">box</span> <span class="title">is</span> <span class="title">determined</span> <span class="title">by</span> <span class="title">the</span> <span class="string">'text-align'</span> <span class="title">property</span>. <span class="title">If</span> <span class="title">that</span> <span class="title">property</span> <span class="title">has</span> <span class="title">the</span> <span class="title">value</span> <span class="string">'justify'</span>, <span class="title">the</span> <span class="title">user</span> <span class="title">agent</span> <span class="title">may</span> <span class="title">stretch</span> <span class="title">spaces</span> <span class="title">and</span> <span class="title">words</span> <span class="title">in</span> <span class="title">inline</span> <span class="title">boxes</span> (<span class="title">but</span> <span class="title">not</span> <span class="title">inline-table</span> <span class="title">and</span> <span class="title">inline-block</span> <span class="title">boxes</span>) <span class="title">as</span> <span class="title">well</span>.</span>
-当内联盒子的总宽度比<span class="built_in">line</span> box小的时候，它们的水平分布由<span class="string">'text-align'</span>属性决定。如果该属性值为<span class="string">'justify'</span>，用户可以拓宽在inline box的空间和文字。
-
-When <span class="operator">an</span> inline box exceeds <span class="operator">the</span> width <span class="operator">of</span> <span class="operator">a</span> <span class="built_in">line</span> box, <span class="keyword">it</span> is <span class="built_in">split</span> <span class="keyword">into</span> several boxes <span class="operator">and</span> these boxes are distributed across several <span class="built_in">line</span> boxes. If <span class="operator">an</span> inline box cannot be <span class="built_in">split</span> (e.g., <span class="keyword">if</span> <span class="operator">the</span> inline box <span class="operator">contains</span> <span class="operator">a</span> single <span class="keyword">character</span>, <span class="operator">or</span> language specific <span class="built_in">word</span> breaking rules disallow <span class="operator">a</span> break <span class="operator">within</span> <span class="operator">the</span> inline box, <span class="operator">or</span> <span class="keyword">if</span> <span class="operator">the</span> inline box is affected <span class="keyword">by</span> <span class="operator">a</span> white-<span class="constant">space</span> <span class="built_in">value</span> <span class="operator">of</span> nowrap <span class="operator">or</span> pre), <span class="keyword">then</span> <span class="operator">the</span> inline box overflows <span class="operator">the</span> <span class="built_in">line</span> box.
-如果内联盒子的宽度超过了<span class="built_in">line</span> box，内联盒子会被分解成几个盒子，然后分布在几个<span class="built_in">line</span> box里面。如果内联盒子不能被分解（e.g.，如果内联盒子有单个单词、或者有特殊的换行规则，或者被<span class="string">'white-space'</span>的<span class="string">'nowrap'</span>、<span class="string">'pre'</span>影响），它会超过<span class="built_in">line</span> box。
-
-When <span class="operator">an</span> inline box is <span class="built_in">split</span>, margins, borders, <span class="operator">and</span> padding have no visual effect where <span class="operator">the</span> <span class="built_in">split</span> occurs (<span class="operator">or</span> <span class="keyword">at</span> <span class="keyword">any</span> <span class="built_in">split</span>, when there are several).
-如果一个内联盒子被分解了，margins、borders、和padding在他们被分解的位置没有视觉效果。
-
-Inline boxes may also be <span class="built_in">split</span> <span class="keyword">into</span> several boxes <span class="operator">within</span> <span class="operator">the</span> same <span class="built_in">line</span> box due <span class="built_in">to</span> bidirectional <span class="keyword">text</span> processing.
-由于双向文本处理（bidirectional <span class="keyword">text</span> processing）内联盒子有可能在同一个<span class="built_in">line</span> box里被分解成不同的盒子。
-
-Line boxes are created <span class="keyword">as</span> needed <span class="built_in">to</span> hold inline-level content <span class="operator">within</span> <span class="operator">an</span> inline formatting context. Line boxes that contain no <span class="keyword">text</span>, no preserved white <span class="constant">space</span>, no inline elements <span class="operator">with</span> non-<span class="constant">zero</span> margins, padding, <span class="operator">or</span> borders, <span class="operator">and</span> no other <span class="operator">in</span>-flow content (such <span class="keyword">as</span> images, inline blocks <span class="operator">or</span> inline tables), <span class="operator">and</span> <span class="built_in">do</span> <span class="operator">not</span> <span class="function"><span class="keyword">end</span> <span class="title">with</span> <span class="title">a</span> <span class="title">preserved</span> <span class="title">newline</span> <span class="title">must</span> <span class="title">be</span> <span class="title">treated</span> <span class="title">as</span> <span class="title">zero-height</span> <span class="title">line</span> <span class="title">boxes</span> <span class="title">for</span> <span class="title">the</span> <span class="title">purposes</span> <span class="title">of</span> <span class="title">determining</span> <span class="title">the</span> <span class="title">positions</span> <span class="title">of</span> <span class="title">any</span> <span class="title">elements</span> <span class="title">inside</span> <span class="title">of</span> <span class="title">them</span>, <span class="title">and</span> <span class="title">must</span> <span class="title">be</span> <span class="title">treated</span> <span class="title">as</span> <span class="title">not</span> <span class="title">existing</span> <span class="title">for</span> <span class="title">any</span> <span class="title">other</span> <span class="title">purpose</span>.</span>
-<span class="built_in">line</span> box主要被用来在IFC内装载内联级内容。不包含文本、不预留空白、没有非零margins,padding,border 或者其他flow内容（images、 inline block 或者 inline tables）的内联元素的<span class="built_in">line</span> box必须被当成零高度的<span class="built_in">line</span> box，主要为了定位其他在其里面的元素，还有必须被当成不存在的或者其他目的（最后一句是什么鬼？？？看不懂）。
-</code></pre><p>参考资料：</p>
+<blockquote>
+</blockquote>
+<p>   an inline formatting context, boxes are laid out horizontally, one after the other, beginning at the top of a containing block. Horizontal margins, borders, and padding are respected between these boxes. The boxes may be aligned vertically in different ways: their bottoms or tops may be aligned, or the baselines of text within them may be aligned. The rectangular area that contains the boxes that form a line is called a line box.</p>
+<p>在一个IFC中，从父级元素的顶部开始，盒子一个接一个横向排列。此时，横向的margin、borders、padding在这些盒子中都是有效的。这些盒子有可能通过不同的方式垂直对齐：1、他们底部或者顶部可以对齐，2、或者可以他们内部的文字基线可以对齐。如果一个矩形区域，包含着一些排成一条线的盒子，称为line box。</p>
+<blockquote>
+</blockquote>
+<p>The width of a line box is determined by a containing block and the presence of floats. The height of a line box is determined by the rules given in the section on line height calculations.</p>
+<p>一个line box的宽度，由他的包含块(containg block)和floats的存在情况决定。linebox的高度，由你给出的代码决定。</p>
+<blockquote>
+</blockquote>
+<p>A line box is always tall enough for all of the boxes it contains. However, it may be taller than the tallest box it contains (if, for example, boxes are aligned so that baselines line up). When the height of a box B is less than the height of the line box containing it, the vertical alignment of B within the line box is determined by the ‘vertical-align’ property.     When several inline-level boxes cannot fit horizontally within a single line box, they are distributed among two or more vertically-stacked line boxes. Thus, a paragraph is a vertical stack of line boxes. Line boxes are stacked with no vertical separation (except as specified elsewhere) and they never overlap.</p>
+<p>一般line box的高度对于子元素而言总是够用的，不过有可能比他包含的最高的元素还高（如果这样，内部包含的盒子会对齐，基线排成一排）。当盒子的高度小于父级盒子高度时，垂直方向的对齐由‘vertical-align’属性决定（疑问：原文的box B是啥？？）。<br>当几个内联盒子在line box一行内放不下时，它们会分布在两个以上的垂直并列(vertically-stacked)的line box上。因此，一个段落都是一堆line box堆叠在一起。line box在垂直堆叠的时候，不会有分离(no vertical separation)而且绝不会重叠（其他特殊情况除外【啥特殊情况？？】）</p>
+<blockquote>
+</blockquote>
+<p>In general, the left edge of a line box touches the left edge of its containing block and the right edge touches the right edge of its containing block. However, floating boxes may come between the containing block edge and the line box edge. Thus, although line boxes in the same inline formatting context generally have the same width (that of the containing block), they may vary in width if available horizontal space is reduced due to floats. Line boxes in the same inline formatting context generally vary in height (e.g., one line might contain a tall image while the others contain only text).</p>
+<p>一般来说，line box和内部元素，都是左挨左，右挨右。不过浮动盒子可能会在包含块和line box的边缘之间。因此，即使line box在同一个IFC里通常有相同的宽度。如果他们横向间距会因float减少，它们宽度可能会不一样。line box在同一个IFC高度可能不一样（e.x.：含有不同高度的image）</p>
+<blockquote>
+</blockquote>
+<p>When the total width of the inline-level boxes on a line is less than the width of the line box containing them, their horizontal distribution within the line box is determined by the ‘text-align’ property. If that property has the value ‘justify’, the user agent may stretch spaces and words in inline boxes (but not inline-table and inline-block boxes) as well.</p>
+<p>当内联盒子的总宽度比line box小的时候，它们的水平分布由’text-align’属性决定。如果该属性值为’justify’，用户可以拓宽在inline box的空间和文字。</p>
+<blockquote>
+<p>When an inline box exceeds the width of a line box, it is split into several boxes and these boxes are distributed across several line boxes. If an inline box cannot be split (e.g., if the inline box contains a single character, or language specific word breaking rules disallow a break within the inline box, or if the inline box is affected by a white-space value of nowrap or pre), then the inline box overflows the line box.</p>
+</blockquote>
+<p>如果内联盒子的宽度超过了line box，内联盒子会被分解成几个盒子，然后分布在几个line box里面。如果内联盒子不能被分解（e.g.，如果内联盒子有单个单词、或者有特殊的换行规则，或者被’white-space’的’nowrap’、’pre’影响），它会超过line box。</p>
+<p>&gt;</p>
+<p>When an inline box is split, margins, borders, and padding have no visual effect where the split occurs (or at any split, when there are several).</p>
+<p>如果一个内联盒子被分解了，margins、borders、和padding在他们被分解的位置没有视觉效果。</p>
+<p>&gt;<br>Inline boxes may also be split into several boxes within the same line box due to bidirectional text processing.</p>
+<p>由于双向文本处理（bidirectional text processing）内联盒子有可能在同一个line box里被分解成不同的盒子。</p>
+<blockquote>
+<p>Line boxes are created as needed to hold inline-level content within an inline formatting context. Line boxes that contain no text, no preserved white space, no inline elements with non-zero margins, padding, or borders, and no other in-flow content (such as images, inline blocks or inline tables), and do not end with a preserved newline must be treated as zero-height line boxes for the purposes of determining the positions of any elements inside of them, and must be treated as not existing for any other purpose.</p>
+</blockquote>
+<p>line box主要被用来在IFC内装载内联级内容。不包含文本、不预留空白、没有非零margins,padding,border 或者其他flow内容（images、 inline block 或者 inline tables）的内联元素的line box必须被当成零高度的line box，主要为了定位其他在其里面的元素，还有必须被当成不存在的或者其他目的（这是什么鬼？？？看不懂）。</p>
+<p>参考资料：</p>
 <pre><code>W3C规范：<span class="string">http:</span><span class="comment">//www.w3.org/TR/CSS2/visuren.html</span>
 MDN的介绍：<span class="string">https:</span><span class="comment">//developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Visual_formatting_model</span>
 知乎一个很棒的答案：<span class="string">https:</span><span class="comment">//www.zhihu.com/question/20086234</span>
