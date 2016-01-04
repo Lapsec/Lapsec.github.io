@@ -37,16 +37,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="canvas性能优化的几个点">
+<meta name="description" content="用js实现的设计模式，挺多种的嗯。
+一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="canvas性能优化">
-<meta property="og:url" content="http://yoursite.com/2015/12/01/canvas性能优化/index.html">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://yoursite.com/2015/12/02/设计模式/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="canvas性能优化的几个点">
-<meta property="og:updated_time" content="2015-12-01T02:50:05.000Z">
+<meta property="og:description" content="用js实现的设计模式，挺多种的嗯。
+一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
+<meta property="og:updated_time" content="2015-12-02T15:08:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="canvas性能优化">
-<meta name="twitter:description" content="canvas性能优化的几个点">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="用js实现的设计模式，挺多种的嗯。
+一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +59,7 @@
   };
 </script>
 
-    <title> canvas性能优化 // Lapsec </title>
+    <title> 设计模式 // Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -179,7 +182,7 @@
           
           
             
-              canvas性能优化
+              设计模式
             
           
         </h1>
@@ -188,8 +191,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-01T10:27:19+08:00" content="2015-12-01">
-            2015-12-01
+          <time itemprop="dateCreated" datetime="2015-12-02T22:48:51+08:00" content="2015-12-02">
+            2015-12-02
           </time>
         </span>
 
@@ -199,8 +202,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/12/01/canvas性能优化/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/01/canvas性能优化/" itemprop="commentsCount"></span>
+              <a href="/2015/12/02/设计模式/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/02/设计模式/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -214,22 +217,8 @@
       
 
       
-        <span itemprop="articleBody"><pre><code><span class="keyword">canvas</span>性能优化的几个点
-</code></pre><a id="more"></a>
-<p>####测试的几个点：</p>
-<pre><code><span class="number">1</span>、遍历图像数据；
-<span class="number">2</span>、对比<span class="function"><span class="title">drawImage</span><span class="params">()</span></span>与<span class="function"><span class="title">putImageData</span><span class="params">()</span></span>的绘图效率；
-<span class="number">3</span>、使用<span class="function"><span class="title">drawImage</span><span class="params">()</span></span>来绘制canvas，而非普通图像
-<span class="number">4</span>、在使用<span class="function"><span class="title">drawImage</span><span class="params">()</span></span>绘图时缩放图像；
-</code></pre><p>测试神器：<a href="http://jsperf.com/" target="_blank" rel="external">http://jsperf.com/</a></p>
-<p>###对比drawImage(HTMLImage)、putImageData(HTMLCanvas)与putImageData()的绘图效率</p>
-<p>drawImage()比putImageData要快一些，而且drawImage()可以把某个canvas绘制到另一个canvas上，绘制速度与绘制图像差不多；</p>
-<p>###遍历图像数据</p>
-<pre><code>·避在循环体内直接访问对象属性，应该将其存放在局部变量中；
-·用循环计数器来遍历完整像素，而非像素分量；
-·逆向遍历与移位的效果不好；
-·频繁调用<span class="function"><span class="title">getImageData</span><span class="params">()</span></span>很消耗性能；
-</code></pre><p>对于&lt;用循环计数器来遍历完整像素，而非像素分量&gt;,这个有点奇怪，用4为基准跳跃反而比全部循环要慢，事实如此？But why？</p>
+        <span itemprop="articleBody"><p>用js实现的设计模式，挺多种的嗯。</p>
+<p>一、单例模式：<br>同一个东西只生成一次，第二次进入时直接返回已经生成的。</p>
 </span>
       
     </div>
@@ -241,13 +230,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/02/canvas精灵/" rel="prev">canvas精灵</a>
+              <a href="/2016/01/04/BFC和IFC/" rel="prev">W3C规范里的BFC和IFC</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/30/离屏canvas/" rel="next">离屏canvas</a>
+              <a href="/2015/12/02/canvas精灵/" rel="next">canvas精灵</a>
             
           </div>
         </div>
@@ -296,8 +285,8 @@
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/12/01/canvas性能优化/"
-                       data-title="canvas性能优化" data-url="http://yoursite.com/2015/12/01/canvas性能优化/">
+                  <div class="ds-thread" data-thread-key="2015/12/02/设计模式/"
+                       data-title="设计模式" data-url="http://yoursite.com/2015/12/02/设计模式/">
                   </div>
                 
               </div>
