@@ -37,19 +37,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="用js实现的设计模式，挺多种的嗯。
-一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
+<meta name="description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式">
-<meta property="og:url" content="http://yoursite.com/2015/12/02/设计模式/index.html">
+<meta property="og:title" content="《深入浅出Node.JS》——笔记">
+<meta property="og:url" content="http://yoursite.com/2016/01/19/《深入浅出Node-JS》——个人笔记/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="用js实现的设计模式，挺多种的嗯。
-一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
-<meta property="og:updated_time" content="2015-12-02T15:08:53.000Z">
+<meta property="og:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
+<meta property="og:updated_time" content="2016-01-19T15:47:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式">
-<meta name="twitter:description" content="用js实现的设计模式，挺多种的嗯。
-一、单例模式：同一个东西只生成一次，第二次进入时直接返回已经生成的。">
+<meta name="twitter:title" content="《深入浅出Node.JS》——笔记">
+<meta name="twitter:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +56,7 @@
   };
 </script>
 
-    <title> 设计模式 // Lapsec </title>
+    <title> 《深入浅出Node.JS》——笔记 // Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -182,7 +179,7 @@
           
           
             
-              设计模式
+              《深入浅出Node.JS》——笔记
             
           
         </h1>
@@ -191,8 +188,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-02T22:48:51+08:00" content="2015-12-02">
-            2015-12-02
+          <time itemprop="dateCreated" datetime="2016-01-19T19:51:06+08:00" content="2016-01-19">
+            2016-01-19
           </time>
         </span>
 
@@ -202,8 +199,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/12/02/设计模式/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/02/设计模式/" itemprop="commentsCount"></span>
+              <a href="/2016/01/19/《深入浅出Node-JS》——个人笔记/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/19/《深入浅出Node-JS》——个人笔记/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -217,9 +214,143 @@
       
 
       
-        <span itemprop="articleBody"><p>用js实现的设计模式，挺多种的嗯。</p>
-<p>一、单例模式：<br>同一个东西只生成一次，第二次进入时直接返回已经生成的。</p>
-</span>
+        <span itemprop="articleBody"><p>读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…<br><a id="more"></a></p>
+<p>##一、模块机制<br>    在模块化方面，java有类，python有import，Ruby有require，然后js只有\<script>。在十几年的发展后，社区为JS指定了相应的规范，其中CommonJS是最为重要的里程碑。</p>
+<p>###2.1 CommonJS规范<br>CommonJS愿景：希望js能在任何地方运行</p>
+<p>####2.1.1 CommonJs出发点</p>
+<p>#####原生JS缺陷：</p>
+<ul>
+<li>没有模块系统    </li>
+<li>标准库较少，无文件系统、I/O流等API</li>
+<li>没有标准接口，没有web服务器或数据库之类标准</li>
+<li>没有包管理系统，没有自动加载和安装依赖能力</li>
+</ul>
+<p>#####Node生态系统：</p>
+<p><img src="../images/node.jpg" width="200px"></p>
+<p>Node借用了CommonJS的Modules规范实现了非常简单易用的模块系统——NPM。</p>
+<p>####2.1.2 CommonJS的模块规范</p>
+<p>#####1、模块引用<br>实例: var math = require(‘math’);</p>
+<p>#####2、模块定义</p>
+<ul>
+<li>上下文提供exports对象用于导出当前模块的方法或者变量，并且是唯一导出的出口。</li>
+<li>模块还存在一个module对象，代表模块自身，exports是module的属性。</li>
+<li>在node中，一个文件是一个模块。</li>
+</ul>
+<p>exports.add = function(){<br>    var sum = 0,<br>        i = 0;<br>    return sum;<br>}</p>
+<p>#####3、模块标识<br>    模块标识是传递给require()方法的参数，必须符合小驼峰命名。<br>    模块的意义在于将聚类的方法和变量等限定在私有的作用域中，同时支持引入和导出功能，以顺畅地连接上下游依赖。<br>    每个模块有独立的空间，互不干扰。</p>
+<p>###2.2 Node的模块实现<br>Node中引入模块，有三个步骤</p>
+<ol>
+<li>路径分析；</li>
+<li>文件定位；</li>
+<li>编译执行</li>
+</ol>
+<p>Node模块分两类：一、由Node提供的模块，称为核心模块；2、用户自己编写的，称为文件模块。</p>
+<p>######加载</p>
+<ul>
+<li><b>核心模块</b> 加载的是已经编译好的二进制文件</li>
+<li><b>文件模块</b> 需要完整的路径分析、文件定位、编译执行，速度比核心模块慢</li>
+</ul>
+<p>####2.2.1 优先从缓存加载<br>两种加载方式，都会优先从缓存加载</p>
+<p>####2.2.2 路径分析和文件定位</p>
+<ul>
+<li>模块路径生成规则，从当前目录一直递归到根目录</li>
+<li>文件拓展名分析，按.js, .json. node次序补足拓展名，依次尝试</li>
+<li>目录分析和包，如果分析文件名拓展，还没找到对应文件，却得到一个目录。此时将目录当成一个包来处理。</li>
+</ul>
+<p>####2.2.3 模块编译<br>在Node中，每个文件模块都是一个对象：</p>
+<pre><code><span class="function">funciton <span class="title">Module</span><span class="params">(id, parent)</span></span>{
+    <span class="keyword">this</span>.id = id;
+    thid.exports = {};
+    <span class="keyword">this</span>.parent = parent;
+    <span class="keyword">if</span>(parent &amp;&amp; parent.children){
+        parent.children.push(<span class="keyword">this</span>);
+    }
+
+    <span class="keyword">this</span>.filename = <span class="keyword">null</span>;
+    <span class="keyword">this</span>.loadded = <span class="keyword">false</span>;
+    <span class="keyword">this</span>.children = [];
+}
+</code></pre><p>编译和执行是引入文件模块的最后一个阶段。定位到具体文件后，Node会新建一个模块对象，根据路径载入并编译。不同文件扩展名，其载入方法有所不同：</p>
+<ul>
+<li>.js文件。通过fs模块同步读取后编译执行；</li>
+<li>.node文件。这是C/C++编写的拓展文件，通过dlopen()方法加载最后编译生成文件。</li>
+<li>.json文件。通过fs模块同步读取文件后，用JSON.parse()解析并返回结果。</li>
+<li><p>其余拓展名文件。都被当成.js文件载入。</p>
+<pre><code>每个编译成功的模块，都会将其文件路径作为索引缓存在<span class="tag">Module</span><span class="class">._cache</span>对象上，提高二次引入性能。
+</code></pre></li>
+</ul>
+<p>#####1. JS模块的编译<br>在编译过程中，Node对获取的JS文件内容进行了包装，一个正常的JS会被包装成如下所示：</p>
+<pre><code>(<span class="function"><span class="keyword">function</span>(<span class="params">exports, require, module, __filename, __dirname</span>)</span>{
+    <span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);
+    exports.area = <span class="function"><span class="keyword">function</span>(<span class="params">radius</span>)</span>{
+        <span class="keyword">return</span> <span class="built_in">Math</span>.PI * radius * radius; 
+    }
+});
+</code></pre><p>每个文件都进行了作用域隔离。包装过的代码通过vm原生模块runInThisContext()方法执行(类似eval)。</p>
+<p>exports和module.exports的区别：</p>
+<ol>
+<li>exports是module.exports的引用</li>
+<li>exports是模块的形参，用exports = function(){}会被传入的参数覆盖。</li>
+</ol>
+<p>###2.3 核心模块<br>    暂时还没需求，笔记略。</p>
+<p>###2.4 C/C++扩展模块<br>    暂时还没需求，笔记略。</p>
+<p>###2.5 模块调用栈<br>    暂时还没需求，笔记略。</p>
+<p>###2.6 包与NPM</p>
+<p>####2.6.1 包结构<br>包是一个存档文件。符合CommonJS规范的包目录应该包含如下文件</p>
+<ul>
+<li>package.josn: 包描述文件</li>
+<li>bin: 二进制文件目录</li>
+<li>lib: JS代码文件目录</li>
+<li>doc: 文档目录</li>
+<li>test 单元测试用例代码</li>
+</ul>
+<p>####2.6.2 包描述文件与NPM<br>CommonJS为package.json文件定义了如下的必需字段：</p>
+<ul>
+<li>name。报名</li>
+<li>description。 包简介。</li>
+<li>version。版本号。</li>
+<li>keywords。 关键词数据，用来在NPM做分类搜索</li>
+<li>maintainer。包维护者列表。</li>
+</ul>
+<p>###2.7 前后端公用模板</p>
+<p>####2.7.1 模块的侧重点<br>前端模块：AMD(Asynchronous Module Definition)、CDM</p>
+<p>#####2.7.2 AMD规范<br>AMD是CommonJS模块规范的延伸，定义如下：</p>
+<pre><code><span class="keyword">define</span>(<span class="title">id</span>?, dependencies?, factory);
+</code></pre><p>与Node模块相似，不过Node是隐式包装，AMD需要显式。</p>
+<p>####2.7.3 CMD规范<br>与AMD规范的主要区别在于定义模块和依赖引入部分。AMD需要在声明模块的时候指定所有依赖，通过形参传递依赖到模块内容中：</p>
+<pre><code>define([<span class="string">'dep1'</span>, <span class="string">'dep2'</span>], <span class="function"><span class="keyword">function</span><span class="params">(dep1, dep2)</span></span>{
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{};
+});
+</code></pre><p>CMD模块更接近Node对CommonJS规范的定义：</p>
+<pre><code><span class="keyword">define</span>(<span class="title">factory</span>);
+</code></pre><p>在依赖部分，CMD支持动态引入：</p>
+<pre><code>define(<span class="function"><span class="keyword">function</span><span class="params">(<span class="keyword">require</span>, exports, <span class="keyword">module</span>)</span><span class="comment">{
+    //
+}</span>);</span>
+</code></pre><p>####2.7.4 兼容多种模块规范<br>让代码同时兼容Node、AMD、CMD和常见浏览器:</p>
+<pre><code>;(<span class="function"><span class="keyword">function</span>(<span class="params">name, definition</span>)</span>{
+    <span class="comment">// 检测上下文环境是否为AMD或者CMD</span>
+    <span class="keyword">var</span> hasDefine = <span class="keyword">typeof</span> define === <span class="string">'function'</span>,
+    <span class="comment">// 检查上下文是否为Node</span>
+        hasExports = <span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span> &amp;&amp; <span class="built_in">module</span>.exports;
+
+    <span class="keyword">if</span> (hasDefine){
+        <span class="comment">//AMD或者CMD</span>
+        define(definition);
+    } <span class="keyword">else</span> <span class="keyword">if</span> (hasExports){
+        <span class="comment">// 定义为普通Node模块</span>
+        <span class="built_in">module</span>.exports = definition();
+    } <span class="keyword">else</span> {
+        <span class="keyword">this</span>[name] = definition();
+    }
+})(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">return</span> hello;
+    }
+});
+</code></pre><p>##二、异步I/O</p>
+<p>##三、异步编程</p>
+</script></p></span>
       
     </div>
 
@@ -230,13 +361,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/04/BFC和IFC/" rel="prev">W3C规范里的BFC和IFC</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/02/canvas精灵/" rel="next">canvas精灵</a>
+              <a href="/2016/01/04/BFC和IFC/" rel="next">W3C规范里的BFC和IFC</a>
             
           </div>
         </div>
@@ -285,8 +414,8 @@
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/12/02/设计模式/"
-                       data-title="设计模式" data-url="http://yoursite.com/2015/12/02/设计模式/">
+                  <div class="ds-thread" data-thread-key="2016/01/19/《深入浅出Node-JS》——个人笔记/"
+                       data-title="《深入浅出Node.JS》——笔记" data-url="http://yoursite.com/2016/01/19/《深入浅出Node-JS》——个人笔记/">
                   </div>
                 
               </div>
