@@ -44,7 +44,7 @@
 <meta property="og:site_name" content="Lapsec">
 <meta property="og:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
 <meta property="og:image" content="http://yoursite.com/../images/node.jpg">
-<meta property="og:updated_time" content="2016-01-19T15:57:12.000Z">
+<meta property="og:updated_time" content="2016-01-19T16:02:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出Node.JS》——笔记">
 <meta name="twitter:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
@@ -226,8 +226,8 @@
 </ul>
 <h5 id="Node生态系统：">Node生态系统：</h5><p><img src="../images/node.jpg" width="200px"></p>
 <p>Node借用了CommonJS的Modules规范实现了非常简单易用的模块系统——NPM。</p>
-<h4 id="2-1-2_CommonJS的模块规范">2.1.2 CommonJS的模块规范</h4><h5 id="1、模块引用">1、模块引用</h5><p>实例: var math = require(‘math’);</p>
-<h5 id="2、模块定义">2、模块定义</h5><ul>
+<h4 id="2-1-2_CommonJS的模块规范">2.1.2 CommonJS的模块规范</h4><h5 id="1、模块引用">1、模块引用</h5><pre><code>实例: <span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);
+</code></pre><h5 id="2、模块定义">2、模块定义</h5><ul>
 <li>上下文提供exports对象用于导出当前模块的方法或者变量，并且是唯一导出的出口。</li>
 <li>模块还存在一个module对象，代表模块自身，exports是module的属性。</li>
 <li>在node中，一个文件是一个模块。</li>
