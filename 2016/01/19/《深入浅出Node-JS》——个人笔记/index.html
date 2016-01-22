@@ -43,9 +43,9 @@
 <meta property="og:url" content="http://yoursite.com/2016/01/19/《深入浅出Node-JS》——个人笔记/index.html">
 <meta property="og:site_name" content="Lapsec">
 <meta property="og:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
-<meta property="og:image" content="https://github.com/Lapsec/Lapsec.github.io/blob/master/images/node.jpg">
-<meta property="og:image" content="https://github.com/Lapsec/Lapsec.github.io/blob/master/images/IO.jpg">
-<meta property="og:updated_time" content="2016-01-22T06:37:20.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/node.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/IO.jpg">
+<meta property="og:updated_time" content="2016-01-22T06:39:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出Node.JS》——笔记">
 <meta name="twitter:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
@@ -226,7 +226,7 @@
 <li>没有标准接口，没有web服务器或数据库之类标准</li>
 <li>没有包管理系统，没有自动加载和安装依赖能力</li>
 </ul>
-<h5 id="Node生态系统：">Node生态系统：</h5><p><img src="https://github.com/Lapsec/Lapsec.github.io/blob/master/images/node.jpg" width="200px"></p>
+<h5 id="Node生态系统：">Node生态系统：</h5><p><img src="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/node.jpg" width="200px"></p>
 <p>Node借用了CommonJS的Modules规范实现了非常简单易用的模块系统——NPM。</p>
 <h4 id="2-1-2_CommonJS的模块规范">2.1.2 CommonJS的模块规范</h4><h5 id="1、模块引用">1、模块引用</h5><pre><code>实例: <span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);
 </code></pre><h5 id="2、模块定义">2、模块定义</h5><ul>
@@ -348,7 +348,7 @@
         <span class="keyword">return</span> hello;
     }
 });
-</code></pre><h1 id="二、异步I/O">二、异步I/O</h1><h3 id="一、Node的异步">一、Node的异步</h3><h4 id="事件循环：">事件循环：</h4><p><img src="https://github.com/Lapsec/Lapsec.github.io/blob/master/images/IO.jpg" width="300px"></p>
+</code></pre><h1 id="二、异步I/O">二、异步I/O</h1><h3 id="一、Node的异步">一、Node的异步</h3><h4 id="事件循环：">事件循环：</h4><p><img src="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/IO.jpg" width="300px"></p>
 <h1 id="三、异步编程">三、异步编程</h1><h3 id="一、高阶函数">一、高阶函数</h3><p>把函数作为参数，或是将函数作为返回值函数。</p>
 <h3 id="二、偏函数">二、偏函数</h3><p>通过指定部分参数来产生一个新的定制函数的形式就是偏函数。</p>
 <pre><code><span class="keyword">var</span> ifType = <span class="function"><span class="keyword">function</span><span class="params">(type)</span></span>{
