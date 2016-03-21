@@ -37,16 +37,37 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="离屏canvas可以很好的解决canvas的性能问题">
+<meta name="description" content="##爬虫部分
+爬虫分三大功能块级：
+1.downloader 请求模块，对指定URL发起请求
+2.pageProcess 处理抓回来的页面代码，过滤代码取出文本
+3.pipeLine 数据库操作
+####一、Downloader基于phantomjs模块，对指定的url进行抓取，返回原生代码。
+为什么要用phantomjs呢？因为可以完美解决页面数据异步加载问题，省时省力省心哈哈哈哈~~！
+#坑（">
 <meta property="og:type" content="article">
-<meta property="og:title" content="离屏canvas">
-<meta property="og:url" content="http://yoursite.com/2015/11/30/离屏canvas/index.html">
+<meta property="og:title" content="nodejs爬虫">
+<meta property="og:url" content="http://yoursite.com/2016/03/21/nodejs爬虫/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="离屏canvas可以很好的解决canvas的性能问题">
-<meta property="og:updated_time" content="2015-11-30T08:03:05.000Z">
+<meta property="og:description" content="##爬虫部分
+爬虫分三大功能块级：
+1.downloader 请求模块，对指定URL发起请求
+2.pageProcess 处理抓回来的页面代码，过滤代码取出文本
+3.pipeLine 数据库操作
+####一、Downloader基于phantomjs模块，对指定的url进行抓取，返回原生代码。
+为什么要用phantomjs呢？因为可以完美解决页面数据异步加载问题，省时省力省心哈哈哈哈~~！
+#坑（">
+<meta property="og:updated_time" content="2016-03-21T07:53:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="离屏canvas">
-<meta name="twitter:description" content="离屏canvas可以很好的解决canvas的性能问题">
+<meta name="twitter:title" content="nodejs爬虫">
+<meta name="twitter:description" content="##爬虫部分
+爬虫分三大功能块级：
+1.downloader 请求模块，对指定URL发起请求
+2.pageProcess 处理抓回来的页面代码，过滤代码取出文本
+3.pipeLine 数据库操作
+####一、Downloader基于phantomjs模块，对指定的url进行抓取，返回原生代码。
+为什么要用phantomjs呢？因为可以完美解决页面数据异步加载问题，省时省力省心哈哈哈哈~~！
+#坑（">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +77,7 @@
   };
 </script>
 
-    <title> 离屏canvas // Lapsec </title>
+    <title> nodejs爬虫 // Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -179,7 +200,7 @@
           
           
             
-              离屏canvas
+              nodejs爬虫
             
           
         </h1>
@@ -188,8 +209,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-30T14:38:10+08:00" content="2015-11-30">
-            2015-11-30
+          <time itemprop="dateCreated" datetime="2016-03-21T14:48:30+08:00" content="2016-03-21">
+            2016-03-21
           </time>
         </span>
 
@@ -199,8 +220,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/11/30/离屏canvas/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/30/离屏canvas/" itemprop="commentsCount"></span>
+              <a href="/2016/03/21/nodejs爬虫/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/21/nodejs爬虫/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -214,44 +235,28 @@
       
 
       
-        <span itemprop="articleBody"><pre><code>离屏<span class="keyword">canvas</span>可以很好的解决<span class="keyword">canvas</span>的性能问题
-</code></pre><a id="more"></a>
-<p>操作步骤：</p>
-<pre><code><span class="number">1</span>、创建离屏<span class="keyword">canvas</span>；
-<span class="number">2</span>、设置离屏<span class="keyword">canvas</span>的宽高；
-<span class="number">3</span>、在离屏<span class="keyword">canvas</span>中进行绘制；
-<span class="number">4</span>、在离屏<span class="keyword">canvas</span>的全部或部分绘制到正在显示的<span class="keyword">canvas</span>上
-</code></pre><p>domo：</p>
-<pre><code>var canvas = document.getElementById(<span class="string">'canvas'</span>),
-    context = canvas.getContext(<span class="string">'2d'</span>),
-
-    offscreenCanvas = document.createElement(<span class="string">'canvas'</span>),
-    offscreenContext = offscreenCanvas.getContext(<span class="string">'2d'</span>);
-
-offscreenCanvas.<span class="variable">width</span> = canvas.<span class="variable">width</span>;
-offscreenCanvas.<span class="variable">height</span> = canvas.<span class="variable">height</span>;
-
-var <span class="built_in">image</span> = <span class="keyword">new</span> Image();
-<span class="built_in">image</span>.src = <span class="string">'balabal.jpg'</span>;
-
-<span class="built_in">image</span>.onload = function(){
-    context.drawImage(<span class="built_in">image</span>, <span class="number">0</span>, <span class="number">0</span>, canvas.<span class="variable">width</span>, canvas.<span class="variable">height</span>);
-    offscreenContext.drawImage(<span class="built_in">image</span>, <span class="number">0</span>, <span class="number">0</span>, canvas.<span class="variable">width</span>, canvas.<span class="variable">height</span>);
-}
-
-function oncangeDraw(){
-    var w = canvas.<span class="variable">width</span>,
-        h = canvas.<span class="variable">height</span>,
-        sw = h * <span class="built_in">scale</span>,
-        sh = h * <span class="built_in">scale</span>;
-
-    <span class="comment">//直接把离屏canvas绘制到现实的canvas上</span>
-    context.drawImage(offscreenCanvas, <span class="number">0</span>, <span class="number">0</span>, 
-        offscreenCanvas.<span class="variable">width</span>, offscreenCanvas.<span class="variable">height</span>,
-        -sw/<span class="number">2</span> + w/<span class="number">2</span>, -sh/<span class="number">2</span> + h/<span class="number">2</span>, sw, sh);
-
-}
-</code></pre></span>
+        <span itemprop="articleBody"><p>##爬虫部分</p>
+<p>爬虫分三大功能块级：</p>
+<pre><code><span class="number">1</span><span class="class">.downloader</span> 请求模块，对指定URL发起请求
+<span class="number">2</span><span class="class">.pageProcess</span> 处理抓回来的页面代码，过滤代码取出文本
+<span class="number">3</span><span class="class">.pipeLine</span> 数据库操作
+</code></pre><p>####一、Downloader<br>基于phantomjs模块，对指定的url进行抓取，返回原生代码。</p>
+<p>为什么要用phantomjs呢？因为可以完美解决页面数据异步加载问题，省时省力省心哈哈哈哈~~！</p>
+<p>#坑<br>（一）抓取的URL服务器挂掉了，需要等待很久。</p>
+<pre><code>解决方案：建立url黑名单，设置最大超时时间为<span class="number">15</span>s，超过加载时间<span class="number">3</span>次的url列入黑名单。下次再碰到该url直接跳过。
+</code></pre><p>（二）网站特别慢，需要加载几十秒才能返回全部数据。</p>
+<pre><code>解决方案：同上
+</code></pre><p>（三）flash页面无法抓取，主要是页游页面。</p>
+<pre><code>解决方案：还木有解决哈哈哈哈。
+</code></pre><p>####二、pageProcess</p>
+<p>处理页面代码模块。downloader抓回来的源代码推送到这里。</p>
+<p>1、各种字符串处理，去掉多余的html，留下文本，推入已抓取数据。</p>
+<p>2、借用cheerio，筛选出源码里面的url，经过pipeLine推入待抓取队列。</p>
+<p>##助攻爬虫部分</p>
+<p>####一、排重<br>排重分两部分：1、URL排重，2、数据排重。</p>
+<p>URL排重利用Bloom Filter，很容易实现。</p>
+<p>数据排重：由于大量网站显示的内容类似，因此只要抓取一个就行了。如何排重？还没准备好算法。数据量比较大，，每抓取一次都遍历？二分法用上了。</p>
+</span>
       
     </div>
 
@@ -262,13 +267,11 @@ function oncangeDraw(){
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/01/canvas性能优化/" rel="prev">canvas性能优化</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/04/ES6变量解构赋值/" rel="next">ES6变量解构赋值</a>
+              <a href="/2016/02/01/NodeJS异步编程/" rel="next">NodeJS异步编程</a>
             
           </div>
         </div>
@@ -317,8 +320,8 @@ function oncangeDraw(){
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/11/30/离屏canvas/"
-                       data-title="离屏canvas" data-url="http://yoursite.com/2015/11/30/离屏canvas/">
+                  <div class="ds-thread" data-thread-key="2016/03/21/nodejs爬虫/"
+                       data-title="nodejs爬虫" data-url="http://yoursite.com/2016/03/21/nodejs爬虫/">
                   </div>
                 
               </div>

@@ -45,7 +45,7 @@
 <meta property="og:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
 <meta property="og:image" content="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/node.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/Lapsec/Lapsec.github.io/master/images/IO.jpg">
-<meta property="og:updated_time" content="2016-01-22T06:44:09.000Z">
+<meta property="og:updated_time" content="2016-01-23T06:11:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入浅出Node.JS》——笔记">
 <meta name="twitter:description" content="读书笔记：模块机制、异步I/O、异步编程、内存控制、Buffer、网络编程…">
@@ -358,13 +358,74 @@
 }
 <span class="keyword">var</span> isString = isType(<span class="string">'String'</span>);
 <span class="keyword">var</span> isFunction = isType(<span class="string">'Function'</span>);
-</code></pre><h3 id="三、异步编程解决方案">三、异步编程解决方案</h3><p>目前有3种主要解决方案：</p>
+</code></pre><h3 id="三、异步编程解决方案">三、异步编程解决方案</h3><p>异步编程的难点： </p>
+<ol>
+<li>异常处理；</li>
+<li>函数嵌套过深；</li>
+<li>阻塞代码</li>
+<li>多线程编程</li>
+</ol>
+<p>目前有3种主要解决方案：</p>
 <ul>
 <li>事件发布/订阅模式</li>
 <li>Promise/Deferred模式</li>
 <li>流程控制库</li>
 </ul>
-<h4 id="一、事件发布/订阅模式">一、事件发布/订阅模式</h4></span>
+<h4 id="一、事件发布/订阅模式">一、事件发布/订阅模式</h4><h4 id="二、Promise/Deferred">二、Promise/Deferred</h4><h5 id="1、Promises/A">1、Promises/A</h5><p>Promise/Deferred模式包含两部分：Promise和Deferred</p>
+<p>Promise/A的定义：</p>
+<ul>
+<li>Promise会在3种状态的一种： 未完成态(pending)、完成态(fulfilled)和失败态(rejected)</li>
+<li>Promise只能从未完成态转向完成态或失败态    </li>
+<li>状态转化后，不能被更改</li>
+</ul>
+<p>在API定义上，Promises/A比较简单，一个Promise对象只要具备then()方法即可，对于then()有以下要求</p>
+<ul>
+<li>接受完成态、错误态得回调方法，出现错误时，会调用对应方法</li>
+<li>可选的支持progress事件回调作为第三方法</li>
+<li>then()方法只接受function对象，其余对象会被忽略</li>
+<li>then()方法继续返回Promise对象，以链式方式调用</li>
+</ul>
+<p>then()方法定义如下：</p>
+<pre><code><span class="function"><span class="title">then</span><span class="params">(fulfilledHandler, errorHandler, ProgressHandler)</span></span>
+</code></pre><p>利用Node的events模块简单实现Promises/A提议：</p>
+<pre><code><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    EventEmitter.call(<span class="keyword">this</span>);
+};
+util.inherits(<span class="built_in">Promise</span>, EventEmitter);
+
+<span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">fulfilledHandler, errorHandler, progressHandler</span>)</span>{
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> fulfilledHandler === <span class="string">'function'</span>){
+        <span class="comment">// 利用once()方法，保证回调只执行一次</span>
+        <span class="keyword">this</span>.once(<span class="string">'success'</span>, fulfilledHandler);
+    }
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> errorHandler === <span class="string">'function'</span>){
+        <span class="keyword">this</span>.once(<span class="string">'error'</span>, errorHandler);
+    }
+    <span class="keyword">if</span>(<span class="keyword">typeof</span> progressHandler === <span class="string">'function'</span>){
+        <span class="keyword">this</span>.once(<span class="string">'progress'</span>, progressHandler);
+    }
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+};
+</code></pre><p>then()方法把回调函数存起来。为了完成整个流程，还需要出发出发这些回调函数。实现此功能的对象称为Deferred，即延迟对象：</p>
+<pre><code><span class="keyword">var</span> Deferred = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">this</span>.state = <span class="string">'unfulfilled'</span>;
+    <span class="keyword">this</span>.promise = <span class="keyword">new</span> <span class="built_in">Promise</span>();
+};
+
+Deferred.prototype.resolve = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>{
+    <span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;
+    <span class="keyword">this</span>.promise.emit(<span class="string">'success'</span>, obj);
+};
+
+Deferred.prototype.reject = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>{
+    <span class="keyword">this</span>.state = <span class="string">'failed'</span>;
+    <span class="keyword">this</span>.promise.emit(<span class="string">'error'</span>, err);
+};
+
+Deferred.prototype.progress = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>{
+    <span class="keyword">this</span>.promise.emit(<span class="string">'progress'</span>, data);
+};
+</code></pre></span>
       
     </div>
 
@@ -374,6 +435,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/01/NodeJS异步编程/" rel="prev">NodeJS异步编程</a>
             
           </div>
 
@@ -469,7 +532,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -511,7 +574,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、模块机制"><span class="nav-number">1.</span> <span class="nav-text">一、模块机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_CommonJS规范"><span class="nav-number">1.0.1.</span> <span class="nav-text">2.1 CommonJS规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1_CommonJs出发点"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">2.1.1 CommonJs出发点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原生JS缺陷："><span class="nav-number">1.0.1.1.1.</span> <span class="nav-text">原生JS缺陷：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Node生态系统："><span class="nav-number">1.0.1.1.2.</span> <span class="nav-text">Node生态系统：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2_CommonJS的模块规范"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2.1.2 CommonJS的模块规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、模块引用"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">1、模块引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、模块定义"><span class="nav-number">1.0.1.2.2.</span> <span class="nav-text">2、模块定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、模块标识"><span class="nav-number">1.0.1.2.3.</span> <span class="nav-text">3、模块标识</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_Node的模块实现"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.2 Node的模块实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#加载"><span class="nav-number">1.0.2.0.0.1.</span> <span class="nav-text">加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1_优先从缓存加载"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">2.2.1 优先从缓存加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2_路径分析和文件定位"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.2.2 路径分析和文件定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3_模块编译"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">2.2.3 模块编译</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_JS模块的编译"><span class="nav-number">1.0.2.3.1.</span> <span class="nav-text">1. JS模块的编译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3_核心模块"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.3 核心模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4_C/C++扩展模块"><span class="nav-number">1.0.4.</span> <span class="nav-text">2.4 C/C++扩展模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5_模块调用栈"><span class="nav-number">1.0.5.</span> <span class="nav-text">2.5 模块调用栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6_包与NPM"><span class="nav-number">1.0.6.</span> <span class="nav-text">2.6 包与NPM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1_包结构"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">2.6.1 包结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2_包描述文件与NPM"><span class="nav-number">1.0.6.2.</span> <span class="nav-text">2.6.2 包描述文件与NPM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7_前后端公用模板"><span class="nav-number">1.0.7.</span> <span class="nav-text">2.7 前后端公用模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1_模块的侧重点"><span class="nav-number">1.0.7.1.</span> <span class="nav-text">2.7.1 模块的侧重点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-2_AMD规范"><span class="nav-number">1.0.7.1.1.</span> <span class="nav-text">2.7.2 AMD规范</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3_CMD规范"><span class="nav-number">1.0.7.2.</span> <span class="nav-text">2.7.3 CMD规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-4_兼容多种模块规范"><span class="nav-number">1.0.7.3.</span> <span class="nav-text">2.7.4 兼容多种模块规范</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、异步I/O"><span class="nav-number">2.</span> <span class="nav-text">二、异步I/O</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Node的异步"><span class="nav-number">2.0.1.</span> <span class="nav-text">一、Node的异步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环："><span class="nav-number">2.0.1.1.</span> <span class="nav-text">事件循环：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、异步编程"><span class="nav-number">3.</span> <span class="nav-text">三、异步编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、高阶函数"><span class="nav-number">3.0.1.</span> <span class="nav-text">一、高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、偏函数"><span class="nav-number">3.0.2.</span> <span class="nav-text">二、偏函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、异步编程解决方案"><span class="nav-number">3.0.3.</span> <span class="nav-text">三、异步编程解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件发布/订阅模式"><span class="nav-number">3.0.3.1.</span> <span class="nav-text">一、事件发布/订阅模式</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、模块机制"><span class="nav-number">1.</span> <span class="nav-text">一、模块机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_CommonJS规范"><span class="nav-number">1.0.1.</span> <span class="nav-text">2.1 CommonJS规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1_CommonJs出发点"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">2.1.1 CommonJs出发点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原生JS缺陷："><span class="nav-number">1.0.1.1.1.</span> <span class="nav-text">原生JS缺陷：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Node生态系统："><span class="nav-number">1.0.1.1.2.</span> <span class="nav-text">Node生态系统：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2_CommonJS的模块规范"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2.1.2 CommonJS的模块规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、模块引用"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">1、模块引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、模块定义"><span class="nav-number">1.0.1.2.2.</span> <span class="nav-text">2、模块定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、模块标识"><span class="nav-number">1.0.1.2.3.</span> <span class="nav-text">3、模块标识</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_Node的模块实现"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.2 Node的模块实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#加载"><span class="nav-number">1.0.2.0.0.1.</span> <span class="nav-text">加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1_优先从缓存加载"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">2.2.1 优先从缓存加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2_路径分析和文件定位"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.2.2 路径分析和文件定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3_模块编译"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">2.2.3 模块编译</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_JS模块的编译"><span class="nav-number">1.0.2.3.1.</span> <span class="nav-text">1. JS模块的编译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3_核心模块"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.3 核心模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4_C/C++扩展模块"><span class="nav-number">1.0.4.</span> <span class="nav-text">2.4 C/C++扩展模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5_模块调用栈"><span class="nav-number">1.0.5.</span> <span class="nav-text">2.5 模块调用栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6_包与NPM"><span class="nav-number">1.0.6.</span> <span class="nav-text">2.6 包与NPM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1_包结构"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">2.6.1 包结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2_包描述文件与NPM"><span class="nav-number">1.0.6.2.</span> <span class="nav-text">2.6.2 包描述文件与NPM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7_前后端公用模板"><span class="nav-number">1.0.7.</span> <span class="nav-text">2.7 前后端公用模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1_模块的侧重点"><span class="nav-number">1.0.7.1.</span> <span class="nav-text">2.7.1 模块的侧重点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-2_AMD规范"><span class="nav-number">1.0.7.1.1.</span> <span class="nav-text">2.7.2 AMD规范</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3_CMD规范"><span class="nav-number">1.0.7.2.</span> <span class="nav-text">2.7.3 CMD规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-4_兼容多种模块规范"><span class="nav-number">1.0.7.3.</span> <span class="nav-text">2.7.4 兼容多种模块规范</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、异步I/O"><span class="nav-number">2.</span> <span class="nav-text">二、异步I/O</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Node的异步"><span class="nav-number">2.0.1.</span> <span class="nav-text">一、Node的异步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环："><span class="nav-number">2.0.1.1.</span> <span class="nav-text">事件循环：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、异步编程"><span class="nav-number">3.</span> <span class="nav-text">三、异步编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、高阶函数"><span class="nav-number">3.0.1.</span> <span class="nav-text">一、高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、偏函数"><span class="nav-number">3.0.2.</span> <span class="nav-text">二、偏函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、异步编程解决方案"><span class="nav-number">3.0.3.</span> <span class="nav-text">三、异步编程解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件发布/订阅模式"><span class="nav-number">3.0.3.1.</span> <span class="nav-text">一、事件发布/订阅模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、Promise/Deferred"><span class="nav-number">3.0.3.2.</span> <span class="nav-text">二、Promise/Deferred</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Promises/A"><span class="nav-number">3.0.3.2.1.</span> <span class="nav-text">1、Promises/A</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

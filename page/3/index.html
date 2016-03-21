@@ -40,7 +40,7 @@
 <meta name="description" content="Hello World">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Lapsec">
-<meta property="og:url" content="http://yoursite.com/tags/BigPipe/index.html">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="Lapsec">
 <meta property="og:description" content="Hello World">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
   };
 </script>
 
-    <title> 标签: BigPipe // Lapsec </title>
+    <title> Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -81,7 +81,9 @@
 
 
 
-<div class="container one-column ">
+<div class="container one-column 
+   page-home 
+">
     <div class="headband"></div>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
         <div class="header-inner"><h1 class="site-meta">
@@ -165,41 +167,94 @@
         <div class="main-inner">
             <div id="content" class="content">
                 
-
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        BigPipe
-        <small>标签</small>
-      </h2>
-    </div>
-
+  <section id="posts" class="posts-expand">
     
       
 
-  <article class="post post-type-normal"itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
 
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/09/12/扒拉下BigPipe/" itemprop="url">
-              <span itemprop="name">为什么要用BigPipe</span>
-            </a>
-        
-      </h1>
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/JSONP原理及实现跨域的方式/" itemprop="url">
+                JSONP原理及实现跨域的方式
+              </a>
+            
+          
+        </h1>
+      
 
       <div class="post-meta">
-        <time class="post-time" datetime="2015-09-12T10:17:44.000Z" itemprop="dateCreated" content="2015-09-12"> 09-12 </time>
-      </div>
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-05-27T16:48:19+08:00" content="2015-05-27">
+            2015-05-27
+          </time>
+        </span>
 
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/05/27/JSONP原理及实现跨域的方式/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/JSONP原理及实现跨域的方式/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
     </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>今天做页面时，后台给了个接口：<a href="https://a.a.com/a/a.json">https://a.a.com/a/a.json</a>, 我页面的上线地址是：<a href="http://b.b.com。">http://b.b.com。</a><br>显而易见，因为浏览器同源策略的限制，通过ajax无法无法取得json的数据。 </p>
+<blockquote>
+<p>   <a href="http://baike.baidu.com/link?url=-cpEuZeNumlzmO2eRL6JvKGq_7qrIho9cVWuhnJLm97tPHT4wMcVIj-2eVgvMCzxEmXktgvqhB9UlZah7x1xAa">百度百科</a></p>
+<pre><code>同源策略，它是由Netscape提出的一个著名的安全策略。现在所有支JavaScript的浏览器都会使用这个策略。
+
+所谓同源是指、域名、协议和端口都相同。当一个浏览器的两个<span class="constant">tab</span>页中分别打开来 百度和谷歌的页面当浏览器的百度<span class="constant">tab</span>页执行一个脚本的时候会检查这脚本是属于哪个页面的，即检查是否同源，只有和百度同源的脚本才会被执行。
+</code></pre></blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/27/JSONP原理及实现跨域的方式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
 
 
     
-  </div>
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
             </div>
 
@@ -312,13 +367,7 @@
   
   
   
-    <script type="text/javascript">
-      postMotionOptions = {stagger: 100, drag: true};
-    </script>
   
-
-  
-    
 
   
     
@@ -341,8 +390,8 @@
   	<script src="/js/hook-duoshuo.js"></script>
   
 
-    
   
+
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
@@ -372,6 +421,31 @@
 
 
 
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lapsec"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+  
 
 
 

@@ -37,16 +37,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="离屏canvas可以很好的解决canvas的性能问题">
+<meta name="description" content="进入nodejs世界后，遇到的第一个坑就是callback hell。开始我们填坑之路。
+本文参考阮一峰老师的文章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="离屏canvas">
-<meta property="og:url" content="http://yoursite.com/2015/11/30/离屏canvas/index.html">
+<meta property="og:title" content="NodeJS异步编程">
+<meta property="og:url" content="http://yoursite.com/2016/02/01/NodeJS异步编程/index.html">
 <meta property="og:site_name" content="Lapsec">
-<meta property="og:description" content="离屏canvas可以很好的解决canvas的性能问题">
-<meta property="og:updated_time" content="2015-11-30T08:03:05.000Z">
+<meta property="og:description" content="进入nodejs世界后，遇到的第一个坑就是callback hell。开始我们填坑之路。
+本文参考阮一峰老师的文章">
+<meta property="og:updated_time" content="2016-02-12T12:35:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="离屏canvas">
-<meta name="twitter:description" content="离屏canvas可以很好的解决canvas的性能问题">
+<meta name="twitter:title" content="NodeJS异步编程">
+<meta name="twitter:description" content="进入nodejs世界后，遇到的第一个坑就是callback hell。开始我们填坑之路。
+本文参考阮一峰老师的文章">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +59,7 @@
   };
 </script>
 
-    <title> 离屏canvas // Lapsec </title>
+    <title> NodeJS异步编程 // Lapsec </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -179,7 +182,7 @@
           
           
             
-              离屏canvas
+              NodeJS异步编程
             
           
         </h1>
@@ -188,8 +191,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-11-30T14:38:10+08:00" content="2015-11-30">
-            2015-11-30
+          <time itemprop="dateCreated" datetime="2016-02-01T15:17:12+08:00" content="2016-02-01">
+            2016-02-01
           </time>
         </span>
 
@@ -199,8 +202,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/11/30/离屏canvas/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/30/离屏canvas/" itemprop="commentsCount"></span>
+              <a href="/2016/02/01/NodeJS异步编程/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/01/NodeJS异步编程/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -214,44 +217,103 @@
       
 
       
-        <span itemprop="articleBody"><pre><code>离屏<span class="keyword">canvas</span>可以很好的解决<span class="keyword">canvas</span>的性能问题
-</code></pre><a id="more"></a>
-<p>操作步骤：</p>
-<pre><code><span class="number">1</span>、创建离屏<span class="keyword">canvas</span>；
-<span class="number">2</span>、设置离屏<span class="keyword">canvas</span>的宽高；
-<span class="number">3</span>、在离屏<span class="keyword">canvas</span>中进行绘制；
-<span class="number">4</span>、在离屏<span class="keyword">canvas</span>的全部或部分绘制到正在显示的<span class="keyword">canvas</span>上
-</code></pre><p>domo：</p>
-<pre><code>var canvas = document.getElementById(<span class="string">'canvas'</span>),
-    context = canvas.getContext(<span class="string">'2d'</span>),
-
-    offscreenCanvas = document.createElement(<span class="string">'canvas'</span>),
-    offscreenContext = offscreenCanvas.getContext(<span class="string">'2d'</span>);
-
-offscreenCanvas.<span class="variable">width</span> = canvas.<span class="variable">width</span>;
-offscreenCanvas.<span class="variable">height</span> = canvas.<span class="variable">height</span>;
-
-var <span class="built_in">image</span> = <span class="keyword">new</span> Image();
-<span class="built_in">image</span>.src = <span class="string">'balabal.jpg'</span>;
-
-<span class="built_in">image</span>.onload = function(){
-    context.drawImage(<span class="built_in">image</span>, <span class="number">0</span>, <span class="number">0</span>, canvas.<span class="variable">width</span>, canvas.<span class="variable">height</span>);
-    offscreenContext.drawImage(<span class="built_in">image</span>, <span class="number">0</span>, <span class="number">0</span>, canvas.<span class="variable">width</span>, canvas.<span class="variable">height</span>);
+        <span itemprop="articleBody"><p>进入nodejs世界后，遇到的第一个坑就是callback hell。开始我们填坑之路。</p>
+<p>本文参考阮一峰老师的<a href="http://es6.ruanyifeng.com/#docs/async" target="_blank" rel="external">文章</a><br><a id="more"></a></p>
+<p>##一、Promise</p>
+<p>ES6规定，Promise对象是一个构造函数，用来生成Promise。</p>
+<pre><code><span class="built_in">Promise</span>构造函数接受一个函数作为参数，函数两个参数分别为resolve和reject。由js引擎提供，不用自己部署。
+resolve函数作用，将<span class="built_in">Promise</span>对象状态从“未完成”，变为“成功”，在异步操作成功时调用，并将异步操作的结果，作为参数船体出去；
+reject函数的作用是，将<span class="built_in">Promise</span>对象的状态从“未完成”变为“失败”（即从Pending变为Rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
+</code></pre><p>promise写法：</p>
+<pre><code>var readFile = require(<span class="string">'fs-readfile-promise'</span>);
+readFile(fileA)
+.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(data)</span></span>{
+    console.<span class="built_in">log</span>(<span class="type">data</span>.toString());
+})
+.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+    <span class="keyword">return</span> readFile(fileB);
+})
+.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(data)</span></span>{
+    console.<span class="built_in">log</span>(<span class="type">data</span>.toString());
+})
+.catch(<span class="function"><span class="keyword">function</span><span class="params">(err)</span></span> {
+    console.<span class="built_in">log</span>(err);
+});
+</code></pre><p>Promise对回调进行了改进，换成了新的写法。</p>
+<p>不过Promise最大的问题是代码冗余，到处都是then()。</p>
+<p>##二、Generator函数</p>
+<p>#####协程(coroutine)<br>协程有点像函数，也有点像线程</p>
+<p>流程如下：</p>
+<pre><code>第一步，协程<span class="literal">A</span>开始执行。
+第二步，协程<span class="literal">A</span>执行到一半，进入暂停，执行权转移到协程B。
+第三步，（一段时间后）协程B交还执行权。
+第四步，协程<span class="literal">A</span>恢复执行。
+</code></pre><p>node实现：</p>
+<pre><code><span class="function"><span class="keyword">function</span> *<span class="title">asnycJob</span>(<span class="params"></span>) </span>{
+      <span class="comment">// ...其他代码</span>
+      <span class="keyword">var</span> f = <span class="keyword">yield</span> readFile(fileA);
+      <span class="comment">// ...其他代码</span>
+}
+</code></pre><p>上述代为是一个协程，其中奥妙在于yield命令，表示执行到此，将执行权交给其他协程。</p>
+<p>####Generator函数的概念<br>Generator函数是协程在ES6的实现，最大特点是可以交出函数的执行权（即暂停执行）。</p>
+<p>整个Generator函数是一个异步任务的容器。异步操作需要暂停的地方，都用yield语句注明：</p>
+<pre><code><span class="keyword">e</span>.<span class="keyword">g</span>.
+function* <span class="keyword">gen</span>(x){
+      <span class="keyword">var</span> y = yield x + 2;
+      <span class="keyword">return</span> y;
 }
 
-function oncangeDraw(){
-    var w = canvas.<span class="variable">width</span>,
-        h = canvas.<span class="variable">height</span>,
-        sw = h * <span class="built_in">scale</span>,
-        sh = h * <span class="built_in">scale</span>;
-
-    <span class="comment">//直接把离屏canvas绘制到现实的canvas上</span>
-    context.drawImage(offscreenCanvas, <span class="number">0</span>, <span class="number">0</span>, 
-        offscreenCanvas.<span class="variable">width</span>, offscreenCanvas.<span class="variable">height</span>,
-        -sw/<span class="number">2</span> + w/<span class="number">2</span>, -sh/<span class="number">2</span> + h/<span class="number">2</span>, sw, sh);
-
+<span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(1);
+<span class="keyword">g</span>.next() <span class="comment">// { value: 3, done: false }</span>
+<span class="keyword">g</span>.next() <span class="comment">// { value: undefined, done: true }</span>
+</code></pre><p>调用Generator函数，会返回一个内部指针（即遍历器）</p>
+<p>value属性是yiel语句后面表达式的值，表示当前阶段的值。done是一个布尔值，表示Generator函数是否执行完毕。</p>
+<p>####Generator函数数据交换和错误处理<br>Generator函数可以暂停执行和恢复执行，这是能封装异步任务的根本原因。除此还有两个特性：函数体内外的数据交换和错误处理机制。</p>
+<p>next方法返回value的值，是Generator函数向外输出数据；next还可以接受参数，这是向Generator函数体内输入数据。</p>
+<pre><code>function* <span class="keyword">gen</span>(x){
+     <span class="keyword">var</span> y = yield x + 2;
+      <span class="keyword">return</span> y;
 }
-</code></pre></span>
+
+<span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(1);
+<span class="keyword">g</span>.next() <span class="comment">// { value: 3, done: false }</span>
+<span class="keyword">g</span>.next(2) <span class="comment">// { value: 2, done: true }</span>
+</code></pre><p>Generator 函数内部部署错误处理代码，捕获函数体外抛出的错误</p>
+<pre><code><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params">x</span>)</span>{
+      <span class="keyword">try</span> {
+      <span class="keyword">var</span> y = <span class="keyword">yield</span> x + <span class="number">2</span>;
+  } <span class="keyword">catch</span> (e){
+    <span class="built_in">console</span>.log(e);
+  }
+      <span class="keyword">return</span> y;
+}
+
+<span class="keyword">var</span> g = gen(<span class="number">1</span>);
+g.next();
+g.throw(<span class="string">'出错了'</span>);
+<span class="comment">// 出错了</span>
+</code></pre><p>Generator 函数体外，可以使用指针对象throw方法抛出错误，会被函数体内的try…catch代码块捕获。</p>
+<p>####异步任务的封装</p>
+<p>函数定义：</p>
+<pre><code><span class="keyword">var</span> fetch = require('node-fetch');
+function* gen(){
+      <span class="keyword">var</span> url = 'https://api.github.com/users/github';
+      <span class="keyword">var</span> <span class="literal">result</span> = <span class="keyword">yield</span> fetch(url);
+      console.log(<span class="literal">result</span>.bio);
+}
+</code></pre><p>代码使用：</p>
+<pre><code><span class="keyword">var</span> g = gen();
+<span class="keyword">var</span> <span class="literal">result</span> = g.next();
+
+<span class="literal">result</span>.value.then(function(data){
+      <span class="keyword">return</span> data.json();
+}).then(function(data){
+      g.next(data);
+});
+</code></pre><p>由于Fetch模块返回一个Promise对象，因此要用then方法调用下一个next方法</p>
+<p>Generator函数将异步操作表示得很简洁，但是流程管理不方便（何时执行第一阶段、何时执行第二阶段）。</p>
+<p>##三、Thunk函数</p>
+</span>
       
     </div>
 
@@ -262,13 +324,13 @@ function oncangeDraw(){
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/01/canvas性能优化/" rel="prev">canvas性能优化</a>
+              <a href="/2016/03/21/nodejs爬虫/" rel="prev">nodejs爬虫</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/04/ES6变量解构赋值/" rel="next">ES6变量解构赋值</a>
+              <a href="/2016/01/19/《深入浅出Node-JS》——个人笔记/" rel="next">《深入浅出Node.JS》——笔记</a>
             
           </div>
         </div>
@@ -317,8 +379,8 @@ function oncangeDraw(){
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/11/30/离屏canvas/"
-                       data-title="离屏canvas" data-url="http://yoursite.com/2015/11/30/离屏canvas/">
+                  <div class="ds-thread" data-thread-key="2016/02/01/NodeJS异步编程/"
+                       data-title="NodeJS异步编程" data-url="http://yoursite.com/2016/02/01/NodeJS异步编程/">
                   </div>
                 
               </div>
